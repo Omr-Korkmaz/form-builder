@@ -5,11 +5,21 @@ import {Button, Grid, Typography} from "@mui/material";
 import {InputField} from "./fields/InputField.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/config.ts";
+import { CheckboxField } from "./fields/CheckboxField.tsx";
 
 export const FormBuilder = () => {
     const [currentType, setCurrentType] = useState("");
     const [currentKey, setCurrentKey] = useState("")
     const [currentLabel, setCurrentLabel] = useState("")
+
+
+    const [currentStartsWithCapital, setCurrentStartsWithCapital] = useState("");
+    const [currentGreaterThanFive, setCurrentGreaterThanFive] = useState("");
+    const [currentEmailFormat, setCurrentEmailFormat] = useState("");
+    const [currentNoSpecialChars, setCurrentNoSpecialChars] = useState("");
+    const [currentValidDate, setCurrentValidDate] = useState("");
+
+
     const dispatch = useDispatch();
     const {fields} = useSelector((state: RootState) => state.form)
 
@@ -49,6 +59,28 @@ export const FormBuilder = () => {
                 <InputField onChange={(value) => setCurrentLabel(value)} label="Label" value={currentLabel}/>
             </Grid>
             <Grid item xs={12}>
+
+                 <Grid item xs={12}>
+                            <CheckboxField label="startsWithCapital" onChange={(value) => setCurrentStartsWithCapital(value)} value={currentStartsWithCapital}/>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <CheckboxField label="greaterThanFive" onChange={(value) => setCurrentGreaterThanFive(value)} value={currentGreaterThanFive}/>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <CheckboxField label="emailFormat" onChange={(value) => setCurrentEmailFormat(value)} value={currentEmailFormat} />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <CheckboxField label="noSpecialChars" onChange={(value) => setCurrentNoSpecialChars(value)} value={currentNoSpecialChars}/>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <CheckboxField label="validDate" onChange={(value) => setCurrentValidDate(value)} value={currentValidDate} />
+                        </Grid>
+
+
 
                 <Button variant="contained" color="primary" onClick={handleAddingField}>
                     Add Field
