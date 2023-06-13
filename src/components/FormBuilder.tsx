@@ -1,7 +1,7 @@
 import {Dropdown} from "./fields/Dropdown.tsx";
 import {useState} from "react";
 import {addField, FieldType} from "../store/form.ts";
-import {Button, Grid, Typography} from "@mui/material";
+import {Button, Grid, Typography, Box} from "@mui/material";
 import {InputField} from "./fields/InputField.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/config.ts";
@@ -60,6 +60,19 @@ export const FormBuilder = () => {
             </Grid>
             <Grid item xs={12}>
 
+                    <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          flexDirection: 'column',
+          p: 1,
+          mb:2,
+          bgcolor: 'background.paper',
+          borderRadius: 1,
+          border: '1px solid gray'
+        }}
+      >
+
                  <Grid item xs={12}>
                             <CheckboxField label="startsWithCapital" onChange={(value) => setCurrentStartsWithCapital(value)} value={currentStartsWithCapital}/>
                         </Grid>
@@ -79,6 +92,7 @@ export const FormBuilder = () => {
                         <Grid item xs={12}>
                             <CheckboxField label="validDate" onChange={(value) => setCurrentValidDate(value)} value={currentValidDate} />
                         </Grid>
+</Box>
 
 
 
