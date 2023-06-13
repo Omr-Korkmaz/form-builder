@@ -12,6 +12,11 @@ type Field = {
     type: FieldType,
     label: string,
     value: string,
+    startsWithCapital:string,
+    greaterThanFive:string,
+    emailFormat:string,
+    noSpecialChars:string,
+    validDate:string,
 }
 
 export interface FormState {
@@ -26,14 +31,27 @@ export const formSlice = createSlice({
     name: 'form',
     initialState,
     reducers: {
-        addField: (state: FormState, action: PayloadAction<{ key: string, type: FieldType, label: string }>) => {
-            const { key, type, label } = action.payload
+        addField: (state: FormState, action: PayloadAction<{ key: string, type: FieldType, label: string,  startsWithCapital:string,
+            greaterThanFive:string,
+            emailFormat:string,
+            noSpecialChars:string,
+            validDate:string, }>) => {
+            const { key, type, label,  startsWithCapital,
+                greaterThanFive,
+                emailFormat,
+                noSpecialChars,
+                validDate, } = action.payload
 
             state.fields[key] = {
                 key,
                 type,
                 label,
-                value: ''
+                value: '',
+                startsWithCapital,
+                greaterThanFive,
+                emailFormat,
+                noSpecialChars,
+                validDate,
             }
         },
         setValue: (state, action: PayloadAction<{ key: string, value: string }>) => {
@@ -41,6 +59,8 @@ export const formSlice = createSlice({
             const field = state.fields[key];
 
             field.value = value;
+            console.log("field", field.value )
+
         }
     },
 })

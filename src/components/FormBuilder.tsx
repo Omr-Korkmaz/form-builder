@@ -30,7 +30,13 @@ export const FormBuilder = () => {
         }
 
         if (currentType && currentKey && currentLabel) {
-            dispatch(addField({key: currentKey, type: currentType as FieldType, label: currentLabel}))
+            dispatch(addField({key: currentKey, type: currentType as FieldType, label: currentLabel,
+                startsWithCapital:currentStartsWithCapital,
+                greaterThanFive:currentGreaterThanFive,
+                emailFormat:currentEmailFormat,
+                noSpecialChars:currentNoSpecialChars,
+                validDate:currentValidDate,
+            }))
         }
     }
 
@@ -74,23 +80,23 @@ export const FormBuilder = () => {
       >
 
                  <Grid item xs={12}>
-                            <CheckboxField label="startsWithCapital" onChange={(value) => setCurrentStartsWithCapital(value)} value={currentStartsWithCapital}/>
+                            <CheckboxField label="startsWithCapital" onChange={(value) => setCurrentStartsWithCapital(value)} value={currentStartsWithCapital} fieldtype = {currentType}/>
                         </Grid>
 
                         <Grid item xs={12}>
-                            <CheckboxField label="greaterThanFive" onChange={(value) => setCurrentGreaterThanFive(value)} value={currentGreaterThanFive}/>
+                            <CheckboxField label="greaterThanFive" onChange={(value) => setCurrentGreaterThanFive(value)} value={currentGreaterThanFive} fieldtype = {currentType}/>
                         </Grid>
 
                         <Grid item xs={12}>
-                            <CheckboxField label="emailFormat" onChange={(value) => setCurrentEmailFormat(value)} value={currentEmailFormat} />
+                            <CheckboxField label="emailFormat" onChange={(value) => setCurrentEmailFormat(value)} value={currentEmailFormat} fieldtype = {currentType} />
                         </Grid>
 
                         <Grid item xs={12}>
-                            <CheckboxField label="noSpecialChars" onChange={(value) => setCurrentNoSpecialChars(value)} value={currentNoSpecialChars}/>
+                            <CheckboxField label="noSpecialChars" onChange={(value) => setCurrentNoSpecialChars(value)} value={currentNoSpecialChars} fieldtype = {currentType}/>
                         </Grid>
 
                         <Grid item xs={12}>
-                            <CheckboxField label="validDate" onChange={(value) => setCurrentValidDate(value)} value={currentValidDate} />
+                            <CheckboxField label="validDate" onChange={(value) => setCurrentValidDate(value)} value={currentValidDate} fieldtype = {currentType} />
                         </Grid>
 </Box>
 
