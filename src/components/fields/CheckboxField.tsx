@@ -1,4 +1,6 @@
 import {Checkbox, FormControlLabel} from "@mui/material";
+import { useEffect, useState } from "react";
+
 
 type CheckboxFieldProps = {
     label: string;
@@ -9,11 +11,18 @@ type CheckboxFieldProps = {
 }
 
 export const CheckboxField = ({ label, value, onChange, fieldtype }: CheckboxFieldProps) => {
+    const [checked, setChecked] = useState(value === "1");
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChecked(event.target.checked);
+        console.log("event.target.checked", event.target.checked)
+
         onChange(event.target.checked ? "1" : "0");
     };
 
-
+    useEffect(() => {
+        setChecked(false); // Reset the checkbox state when fieldtype changes
+      }, [fieldtype]);
 
     const validation = (fieldtype:string)=>{
 
@@ -48,7 +57,11 @@ export const CheckboxField = ({ label, value, onChange, fieldtype }: CheckboxFie
         <FormControlLabel
         disabled = {validation(fieldtype)}
 
-            control={<Checkbox checked={value === "1"} onChange={handleChange} />}
+            control={<Checkbox 
+                // checked={value === "1"} 
+                checked={checked}
+            
+            onChange={handleChange} />}
             label={label}
         />
     );

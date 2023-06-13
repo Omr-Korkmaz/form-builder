@@ -1,6 +1,6 @@
 import {Dropdown} from "./fields/Dropdown.tsx";
 import {useState} from "react";
-import {addField, FieldType} from "../store/form.ts";
+import {addField, FieldType, ValidationType} from "../store/form.ts";
 import {Button, Grid, Typography, Box} from "@mui/material";
 import {InputField} from "./fields/InputField.tsx";
 import {useDispatch, useSelector} from "react-redux";
@@ -12,12 +12,28 @@ export const FormBuilder = () => {
     const [currentKey, setCurrentKey] = useState("")
     const [currentLabel, setCurrentLabel] = useState("")
 
+    const [currentValidationRules, setCurrentValidationRules] = useState({
+        startsWithCapital:'',
+        greaterThanFive:'',
+        emailFormat:'',
+        noSpecialChars:'',
+        validDate:'',
+    })
 
-    const [currentStartsWithCapital, setCurrentStartsWithCapital] = useState("");
-    const [currentGreaterThanFive, setCurrentGreaterThanFive] = useState("");
-    const [currentEmailFormat, setCurrentEmailFormat] = useState("");
-    const [currentNoSpecialChars, setCurrentNoSpecialChars] = useState("");
-    const [currentValidDate, setCurrentValidDate] = useState("");
+    // const [currentValidationRules, setCurrentValidationRules] = useState<Record<ValidationType, string>>({
+    //     [ValidationType.StartsWithCapital]: '',
+    //     [ValidationType.GreaterThanFive]: '',
+    //     [ValidationType.EmailFormat]: '',
+    //     [ValidationType.NoSpecialChars]: '',
+    //     [ValidationType.ValidDate]: ''
+    //   });
+      
+
+    // const [currentStartsWithCapital, setCurrentStartsWithCapital] = useState("");
+    // const [currentGreaterThanFive, setCurrentGreaterThanFive] = useState("");
+    // const [currentEmailFormat, setCurrentEmailFormat] = useState("");
+    // const [currentNoSpecialChars, setCurrentNoSpecialChars] = useState("");
+    // const [currentValidDate, setCurrentValidDate] = useState("");
 
 
     const dispatch = useDispatch();
@@ -31,11 +47,13 @@ export const FormBuilder = () => {
 
         if (currentType && currentKey && currentLabel) {
             dispatch(addField({key: currentKey, type: currentType as FieldType, label: currentLabel,
-                startsWithCapital:currentStartsWithCapital,
-                greaterThanFive:currentGreaterThanFive,
-                emailFormat:currentEmailFormat,
-                noSpecialChars:currentNoSpecialChars,
-                validDate:currentValidDate,
+                validationRules: currentValidationRules as  ValidationType
+
+                // startsWithCapital:currentValidationRules.noSpecialChars,
+                // greaterThanFive:currentValidationRules.greaterThanFive,
+                // emailFormat:currentValidationRules.emailFormat,
+                // noSpecialChars:currentValidationRules.noSpecialChars,
+                // validDate:currentValidationRules.validDate,
             }))
         }
     }
@@ -78,25 +96,30 @@ export const FormBuilder = () => {
           border: '1px solid gray'
         }}
       >
+                        <p>{!currentType && 'please first select type' }</p>
 
+        
                  <Grid item xs={12}>
-                            <CheckboxField label="startsWithCapital" onChange={(value) => setCurrentStartsWithCapital(value)} value={currentStartsWithCapital} fieldtype = {currentType}/>
+                            <CheckboxField label="startsWithCapital" onChange={(value) => setCurrentValidationRules(prevState => ({ ...prevState, startsWithCapital: value }))}
+ value={currentValidationRules.startsWithCapital} fieldtype = {currentType}/>
                         </Grid>
 
                         <Grid item xs={12}>
-                            <CheckboxField label="greaterThanFive" onChange={(value) => setCurrentGreaterThanFive(value)} value={currentGreaterThanFive} fieldtype = {currentType}/>
+                            <CheckboxField label="greaterThanFive" onChange={(value) => setCurrentValidationRules(prevState => ({ ...prevState, greaterThanFive: value }))}
+ value={currentValidationRules.greaterThanFive} fieldtype = {currentType}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <CheckboxField label="emailFormat" onChange={(value) => setCurrentValidationRules(prevState => ({ ...prevState, emailFormat: value }))}
+ value={currentValidationRules.emailFormat} fieldtype = {currentType}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <CheckboxField label="noSpecialChars" onChange={(value) => setCurrentValidationRules(prevState => ({ ...prevState, noSpecialChars: value }))}
+ value={currentValidationRules.noSpecialChars} fieldtype = {currentType}/>
                         </Grid>
 
                         <Grid item xs={12}>
-                            <CheckboxField label="emailFormat" onChange={(value) => setCurrentEmailFormat(value)} value={currentEmailFormat} fieldtype = {currentType} />
-                        </Grid>
-
-                        <Grid item xs={12}>
-                            <CheckboxField label="noSpecialChars" onChange={(value) => setCurrentNoSpecialChars(value)} value={currentNoSpecialChars} fieldtype = {currentType}/>
-                        </Grid>
-
-                        <Grid item xs={12}>
-                            <CheckboxField label="validDate" onChange={(value) => setCurrentValidDate(value)} value={currentValidDate} fieldtype = {currentType} />
+                            <CheckboxField label="validDate" onChange={(value) => setCurrentValidationRules(prevState => ({ ...prevState, validDate: value }))}
+ value={currentValidationRules.validDate} fieldtype = {currentType}/>
                         </Grid>
 </Box>
 
