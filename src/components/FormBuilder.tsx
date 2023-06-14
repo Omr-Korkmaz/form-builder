@@ -91,23 +91,21 @@ export const FormBuilder = () => {
 
 
 
-                        {Object.keys(currentValidationRules).map((key) => (
-        <Grid item xs={12} key={key}>
-          <CheckboxField
-            label={key}
-            onChange={(value) =>
-              setCurrentValidationRules((prevState) => ({
-                ...prevState,
-                [key]: value,
-              }))
-            }
-
-           
-            value={currentValidationRules[key]}
-            fieldtype={currentType}
-          />
-        </Grid>
-      ))}
+                        {Object.keys(currentValidationRules).map((key: string) => (
+  <Grid item xs={12} key={key}>
+    <CheckboxField
+      label={key}
+      onChange={(value: string) =>
+        setCurrentValidationRules((prevState: ValidationType) => ({
+          ...prevState,
+          [key]: value,
+        }))
+      }
+      value={currentValidationRules[key]}
+      fieldtype={currentType}
+    />
+  </Grid>
+))}
 
 </Box>
 

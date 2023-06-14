@@ -28,19 +28,20 @@ export const InputField = ({ label, value, onChange, field, section,  ...rest }:
 
 
 
-const getItemName = (object, value) => {
-    const keys = [];
-    for (let key in object) {
-      if (object[key] === value) {
-        keys.push(key);      }
-    }
-    return keys;
-};
+      const getItemName = (object: Record<string, string>, value: string): string[] => {
+        const keys: string[] = [];
+        for (let key in object) {
+          if (object[key] === value) {
+            keys.push(key);
+          }
+        }
+        return keys;
+      };
 
 
   const itemName = getItemName(field?.validationRules, "1");
 
-  const validateInput = (value, type,  rules) => {
+  const validateInput = (value: string, type: string,  rules:string[] ) => {
 
     setErrorMessage([]);
     // Perform basic type validation
