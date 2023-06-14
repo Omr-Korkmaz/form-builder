@@ -12,28 +12,13 @@ export const FormBuilder = () => {
     const [currentKey, setCurrentKey] = useState("")
     const [currentLabel, setCurrentLabel] = useState("")
 
-    const [currentValidationRules, setCurrentValidationRules] = useState({
+    const [currentValidationRules, setCurrentValidationRules] = useState<ValidationType>({
         startsWithCapital:'',
         greaterThanFive:'',
         emailFormat:'',
         noSpecialChars:'',
         validDate:'',
     })
-
-    // const [currentValidationRules, setCurrentValidationRules] = useState<Record<ValidationType, string>>({
-    //     [ValidationType.StartsWithCapital]: '',
-    //     [ValidationType.GreaterThanFive]: '',
-    //     [ValidationType.EmailFormat]: '',
-    //     [ValidationType.NoSpecialChars]: '',
-    //     [ValidationType.ValidDate]: ''
-    //   });
-      
-
-    // const [currentStartsWithCapital, setCurrentStartsWithCapital] = useState("");
-    // const [currentGreaterThanFive, setCurrentGreaterThanFive] = useState("");
-    // const [currentEmailFormat, setCurrentEmailFormat] = useState("");
-    // const [currentNoSpecialChars, setCurrentNoSpecialChars] = useState("");
-    // const [currentValidDate, setCurrentValidDate] = useState("");
 
 
     const dispatch = useDispatch();
@@ -48,15 +33,17 @@ export const FormBuilder = () => {
         if (currentType && currentKey && currentLabel) {
             dispatch(addField({key: currentKey, type: currentType as FieldType, label: currentLabel,
                 validationRules: currentValidationRules as  ValidationType
-
-                // startsWithCapital:currentValidationRules.noSpecialChars,
-                // greaterThanFive:currentValidationRules.greaterThanFive,
-                // emailFormat:currentValidationRules.emailFormat,
-                // noSpecialChars:currentValidationRules.noSpecialChars,
-                // validDate:currentValidationRules.validDate,
             }))
         }
     }
+
+
+
+ 
+
+
+
+
 
     return (
         <Grid container spacing={2} sx={{width: 300, margin: "auto"}}>
@@ -98,32 +85,31 @@ export const FormBuilder = () => {
       >
                         <p>{!currentType && 'please first select type' }</p>
 
-        {}
-                 <Grid item xs={12}>
-                            <CheckboxField label="startsWithCapital" onChange={(value) => setCurrentValidationRules(prevState => ({ ...prevState, startsWithCapital: value }))}
- value={currentValidationRules.startsWithCapital} fieldtype = {currentType}/>
-                        </Grid>
+        
 
-                        <Grid item xs={12}>
-                            <CheckboxField label="greaterThanFive" onChange={(value) => setCurrentValidationRules(prevState => ({ ...prevState, greaterThanFive: value }))}
- value={currentValidationRules.greaterThanFive} fieldtype = {currentType}/>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <CheckboxField label="emailFormat" onChange={(value) => setCurrentValidationRules(prevState => ({ ...prevState, emailFormat: value }))}
- value={currentValidationRules.emailFormat} fieldtype = {currentType}/>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <CheckboxField label="noSpecialChars" onChange={(value) => setCurrentValidationRules(prevState => ({ ...prevState, noSpecialChars: value }))}
- value={currentValidationRules.noSpecialChars} fieldtype = {currentType}/>
-                        </Grid>
 
-                        <Grid item xs={12}>
-                            <CheckboxField label="validDate" onChange={(value) => setCurrentValidationRules(prevState => ({ ...prevState, validDate: value }))}
- value={currentValidationRules.validDate} fieldtype = {currentType}/>
-                        </Grid>
+
+
+
+                        {Object.keys(currentValidationRules).map((key) => (
+        <Grid item xs={12} key={key}>
+          <CheckboxField
+            label={key}
+            onChange={(value) =>
+              setCurrentValidationRules((prevState) => ({
+                ...prevState,
+                [key]: value,
+              }))
+            }
+
+           
+            value={currentValidationRules[key]}
+            fieldtype={currentType}
+          />
+        </Grid>
+      ))}
+
 </Box>
-
-
 
                 <Button variant="contained" color="primary" onClick={handleAddingField}>
                     Add Field

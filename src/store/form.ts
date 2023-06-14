@@ -75,7 +75,6 @@ export const formSlice = createSlice({
             const field = state.fields[key];
 
             field.value = value;
-            console.log("field", field.value )
 
         }
     },

@@ -15,7 +15,6 @@ export const CheckboxField = ({ label, value, onChange, fieldtype }: CheckboxFie
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
-        console.log("event.target.checked", event.target.checked)
 
         onChange(event.target.checked ? "1" : "0");
     };
@@ -53,7 +52,6 @@ export const CheckboxField = ({ label, value, onChange, fieldtype }: CheckboxFie
             }
 
 
-            console.log(validation(fieldtype))
 
     return (
         <FormControlLabel

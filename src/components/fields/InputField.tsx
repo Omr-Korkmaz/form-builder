@@ -1,5 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import {TextField, TextFieldProps} from "@mui/material";
+import { validationRules } from "../../utils/validationRules";
+
 
 type InputFieldProps = Omit<TextFieldProps, "onChange"> & {
     label: string;
@@ -22,39 +24,9 @@ export const InputField = ({ label, value, onChange, field, section,  ...rest }:
       const [errorMessage, setErrorMessage] = useState<string[]>([]);
 
 
-console.log(field)
 
 
-const validationRules = [
 
-      {
-        name: 'greaterThanFive',
-
-        rule: (value: string) => parseInt(value, 10) >= 5,
-        message: 'The entered value must be greater than or equal to 5.',
-      },
-      {
-        name: 'startsWithCapital',
-
-        rule: (value: string) => /^[A-Z]/.test(value),
-        message: 'The input must begin with a capital letter.',
-      },
-      {
-        name: 'noSpecialChars',
-
-        rule: (value: string) => /^[a-zA-Z\s]*$/.test(value),
-        message: 'The input must not contain any special characters.',
-      },
-  
-   {
-        name: 'emailFormat',
-
-        rule: (value: string) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value),
-        message: 'Please enter a valid email address.',
-      },
-    
- 
-];
 
 const getItemName = (object, value) => {
     const keys = [];
@@ -79,7 +51,6 @@ const getItemName = (object, value) => {
       else{  validationRules.map((item) => {
             if (!item.rule(value) &&  (rules.includes(item.name))) {
 
-        console.log("errorMessage", item.message)
         setErrorMessage((prevErrorMessages) => [...prevErrorMessages, item.message]);
 
       }
