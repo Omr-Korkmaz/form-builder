@@ -67,16 +67,22 @@ export const InputField = ({ label, value, onChange, field, section,  ...rest }:
             onChange(event.target.value);
         }
           
-        validateInput(event.target.value, field?.type, itemName )
+        // validateInput(event.target.value, field?.type, itemName )
 
 
         };
+
+        const handleBlur = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        
+            validateInput(event.target.value, field?.type, itemName )
+        }
 
 
     return (
         <TextField
             label={label}
             value={value}
+            onBlur={handleBlur}
             onChange={handleChange}
             variant="outlined"
             fullWidth
