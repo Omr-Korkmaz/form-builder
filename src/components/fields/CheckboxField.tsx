@@ -22,6 +22,8 @@ export const CheckboxField = ({ label, value, onChange, fieldtype }: CheckboxFie
 
     useEffect(() => {
         setChecked(false); // Reset the checkbox state when fieldtype changes
+        onChange("0")
+
       }, [fieldtype]);
 
     const validation = (fieldtype:string)=>{

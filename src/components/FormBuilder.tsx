@@ -98,7 +98,7 @@ export const FormBuilder = () => {
       >
                         <p>{!currentType && 'please first select type' }</p>
 
-        
+        {}
                  <Grid item xs={12}>
                             <CheckboxField label="startsWithCapital" onChange={(value) => setCurrentValidationRules(prevState => ({ ...prevState, startsWithCapital: value }))}
  value={currentValidationRules.startsWithCapital} fieldtype = {currentType}/>

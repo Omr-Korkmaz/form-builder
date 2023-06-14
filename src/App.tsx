@@ -1,16 +1,29 @@
 import './App.css'
 import {FormBuilder} from "./components/FormBuilder.tsx";
 import {FormView} from "./components/FormView.tsx";
-import {Grid} from "@mui/material";
+import {Box, Grid} from "@mui/material";
 
 function App() {
     return (
-        <Grid container spacing={2} alignItems="flex-start">
+        <Grid container spacing={8} alignItems="flex-start">
             <Grid item xs={6}>
                 <FormBuilder/>
             </Grid>
             <Grid item xs={6}>
+            <Box
+        sx={{
+          display: 'flex',
+          width:'400px',
+          height:'600px',
+          p: 1,
+          mb:2,
+          bgcolor: 'background.paper',
+          borderRadius: 1,
+          border: '1px solid gray'
+        }}
+      >
                 <FormView/>
+                </Box>
             </Grid>
         </Grid>
     )
