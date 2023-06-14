@@ -43,18 +43,10 @@ export const formSlice = createSlice({
     initialState,
     reducers: {
         addField: (state: FormState, action: PayloadAction<{ key: string, type: FieldType, label: string, validationRules: ValidationType,
-            //  startsWithCapital:string,
-            // greaterThanFive:string,
-            // emailFormat:string,
-            // noSpecialChars:string,
-            // validDate:string,
+   
          }>) => {
             const { key, type, label, validationRules
-                //  startsWithCapital,
-                // greaterThanFive,
-                // emailFormat,
-                // noSpecialChars,
-                // validDate,
+
              } = action.payload
 
             state.fields[key] = {
@@ -63,11 +55,6 @@ export const formSlice = createSlice({
                 label,
                 value: '',
                 validationRules,
-                // startsWithCapital,
-                // greaterThanFive,
-                // emailFormat,
-                // noSpecialChars,
-                // validDate,
             }
         },
         setValue: (state, action: PayloadAction<{ key: string, value: string }>) => {
@@ -76,9 +63,14 @@ export const formSlice = createSlice({
 
             field.value = value;
 
-        }
+        },
+
+        removeField: (state, action: PayloadAction<string>) => {
+            const keyToRemove = action.payload;
+            delete state.fields[keyToRemove];
+        },
     },
 })
 
-export const { addField, setValue } = formSlice.actions
+export const { addField, setValue, removeField } = formSlice.actions
 export const formReducer = formSlice.reducer

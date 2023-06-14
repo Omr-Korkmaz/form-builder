@@ -43,7 +43,7 @@ export const InputField = ({ label, value, onChange, field, section,  ...rest }:
 
   const validateInput = (value: string, type: string,  rules:string[] ) => {
 
-    setErrorMessage([]);
+    setErrorMessage([]); // clear error messages
     // Perform basic type validation
     if (type === ParamType.Number && !/^\d+$/.test(value)) {
 
@@ -73,6 +73,7 @@ export const InputField = ({ label, value, onChange, field, section,  ...rest }:
         };
 
         const handleBlur = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+
         
             validateInput(event.target.value, field?.type, itemName )
         }
