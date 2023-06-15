@@ -6,6 +6,7 @@ import { InputField } from "./fields/InputField.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/config.ts";
 import { CheckboxField } from "./fields/CheckboxField.tsx";
+import { SwitchField } from "./fields/SwitchField.tsx";
 
 export const FormBuilder = () => {
   const [currentType, setCurrentType] = useState("");
@@ -94,7 +95,7 @@ export const FormBuilder = () => {
 
           {Object.keys(currentValidationRules).map((key: string) => (
             <Grid item xs={12} key={key}>
-              <CheckboxField
+              <SwitchField
                 label={key}
                 onChange={(value: string) =>
                   setCurrentValidationRules((prevState: ValidationType) => ({

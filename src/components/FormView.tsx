@@ -72,7 +72,7 @@ export const FormView = () => {
                
                 }}
               >
-              <CheckboxField label={label} onChange={onChange} value={value} section="view"
+              <CheckboxField label={label} onChange={onChange} value={value}
   />
               <DeleteIcon
                 onClick={onRemove}
