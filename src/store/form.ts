@@ -8,13 +8,16 @@ export enum FieldType {
 }
 
 
-export interface ValidationType {
-    startsWithCapital:string,
-    greaterThanFive:string,
-    emailFormat:string,
-    noSpecialChars:string,
-    validDate:string,
-}
+// export interface ValidationType {
+//     startsWithCapital:string,
+//     greaterThanFive:string,
+//     emailFormat:string,
+//     noSpecialChars:string,
+//     validDate:string,
+// }
+export type ValidationType = {
+    [key: string]: string; // Add an index signature to support string-based indexing
+  };
 
 
 type Field = {
