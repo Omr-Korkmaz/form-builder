@@ -5,7 +5,6 @@ import { Button, Grid, Typography, Box, Divider } from "@mui/material";
 import { InputField } from "./fields/InputField.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/config.ts";
-import { CheckboxField } from "./fields/CheckboxField.tsx";
 import { SwitchField } from "./fields/SwitchField.tsx";
 
 export const FormBuilder = () => {
@@ -20,7 +19,24 @@ export const FormBuilder = () => {
       emailFormat: "",
       noSpecialChars: "",
       validDate: "",
+      required:""
     });
+
+
+
+
+    //  const [currentValidationRules, setCurrentValidationRules] =
+    // useState<any>([
+    // {name:'startsWithCapital', values:"", label:'Begin with a capital letter'},
+    // {name:'greaterThanFive', values:"", label:'Greater than or equal to 5'},
+    //   { name:"emailFormat", values:"", label:'Valid email address'},
+    //   {name:" noSpecialChars",values:"", label:'Not contain special chars'},
+    //   {name:"validDate",values:"", label:'Valid Date'},
+      
+    //   {name:"required",values:"", label:'Required field'},
+      
+    // ]);
+
 
   const dispatch = useDispatch();
   const { fields } = useSelector((state: RootState) => state.form);
@@ -91,9 +107,11 @@ export const FormBuilder = () => {
             border: "1px solid gray",
           }}
         >
-          <p>{!currentType && "please first select type"}</p>
-
-          {Object.keys(currentValidationRules).map((key: string) => (
+          {!currentType && <Typography  variant="subtitle2" gutterBottom sx={{color:"red"}}>
+*Choose a field type to activate rules
+      </Typography>
+}
+          {/* {Object.keys(currentValidationRules).map((key: string) => (
             <Grid item xs={12} key={key}>
               <SwitchField
                 label={key}
@@ -105,11 +123,106 @@ export const FormBuilder = () => {
                 }
                 value={currentValidationRules[key]}
                 fieldtype={currentType}
-                email={currentValidationRules.emailFormat}
-                noSpecialChars={currentValidationRules.noSpecialChars}
+                validationRulesValues={currentValidationRules}
               />
             </Grid>
-          ))}
+          ))} */}
+
+
+<Grid item xs={12} >
+              <SwitchField
+                label={"Begin with a capital letter"}
+                onChange={(value: string) =>
+                  setCurrentValidationRules((prevState: ValidationType) => ({
+                    ...prevState,
+                    startsWithCapital: value,
+                  }))
+                }
+                value={currentValidationRules.startsWithCapital}
+                fieldtype={currentType}
+                validationRulesValues={currentValidationRules}
+              />
+            </Grid>
+
+            <Grid item xs={12} >
+              <SwitchField
+                label={"Greater than or equal to 5"}
+                onChange={(value: string) =>
+                  setCurrentValidationRules((prevState: ValidationType) => ({
+                    ...prevState,
+                    greaterThanFive: value,
+                  }))
+                }
+                value={currentValidationRules.greaterThanFive}
+                fieldtype={currentType}
+                validationRulesValues={currentValidationRules}
+              />
+            </Grid>
+
+            <Grid item xs={12} >
+              <SwitchField
+                label={"Valid email address"}
+                onChange={(value: string) =>
+                  setCurrentValidationRules((prevState: ValidationType) => ({
+                    ...prevState,
+                    emailFormat: value,
+                  }))
+                }
+                value={currentValidationRules.emailFormat}
+                fieldtype={currentType}
+                validationRulesValues={currentValidationRules}
+              />
+            </Grid>
+
+            <Grid item xs={12} >
+              <SwitchField
+                label={"Not contain special chars"}
+                onChange={(value: string) =>
+                  setCurrentValidationRules((prevState: ValidationType) => ({
+                    ...prevState,
+                    noSpecialChars: value,
+                  }))
+                }
+                value={currentValidationRules.noSpecialChars}
+                fieldtype={currentType}
+                validationRulesValues={currentValidationRules}
+              />
+            </Grid>
+
+            <Grid item xs={12} >
+              <SwitchField
+                label={"Valid Date"}
+                onChange={(value: string) =>
+                  setCurrentValidationRules((prevState: ValidationType) => ({
+                    ...prevState,
+                    validDate: value,
+                  }))
+                }
+                value={currentValidationRules.validDate}
+                fieldtype={currentType}
+                validationRulesValues={currentValidationRules}
+              />
+            </Grid>
+
+            <Grid item xs={12} >
+              <SwitchField
+                label={"Required field"}
+                onChange={(value: string) =>
+                  setCurrentValidationRules((prevState: ValidationType) => ({
+                    ...prevState,
+                    required: value,
+                  }))
+                }
+                value={currentValidationRules.required}
+                fieldtype={currentType}
+                validationRulesValues={currentValidationRules}
+              />
+            </Grid>
+
+
+
+
+
         </Box>
 
         <Button variant="contained" color="primary" onClick={handleAddingField}>

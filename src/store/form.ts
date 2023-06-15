@@ -16,11 +16,11 @@ export enum FieldType {
 //     validDate:string,
 // }
 export type ValidationType = {
-    [key: string]: string; // Add an index signature to support string-based indexing
+    [key: string]: string; //  index signature to provide string-based indexing
   };
 
 
-type Field = {
+export type Field = {
     key: string,
     type: FieldType,
     label: string,

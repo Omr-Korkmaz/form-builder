@@ -17,7 +17,7 @@ export const FormView = () => {
       const label = field.label;
       const onChange = (value: string) => dispatch(setValue({ key, value }));
       const value = field.value;
-      const onRemove = () => dispatch(removeField(key)); //this key line added extra feature
+      const onRemove = () => dispatch(removeField(key)); //this key line added for extra feature
 
       switch (field.type) {
         case FieldType.Number:

@@ -11,7 +11,7 @@ export const validationRules = [
     },
     {
       name: 'noSpecialChars',
-      rule: (value: string) => /^[a-zA-Z\s]*$/.test(value),
+      rule: (value: string) => /^[a-zA-Z0-9\s]*$/.test(value),
       message: 'The input must not contain any special characters.',
     },
     {

@@ -1,13 +1,15 @@
 import { FormControlLabel, Switch } from "@mui/material";
 import { useEffect, useState } from "react";
+import {  ValidationType } from "../../store/form";
+
+
 
 type SwitchFieldProps = {
   label: string;
   value: string;
   onChange: (checked: string) => void;
   fieldtype: string;
-  email?: any;
-  noSpecialChars?: any;
+  validationRulesValues: ValidationType
 };
 
 export const SwitchField = ({
@@ -15,8 +17,7 @@ export const SwitchField = ({
   value,
   onChange,
   fieldtype,
-  email,
-  noSpecialChars,
+  validationRulesValues
 }: SwitchFieldProps) => {
   const [checked, setChecked] = useState(value === "1");
 
@@ -37,33 +38,33 @@ export const SwitchField = ({
     }
 
     if (fieldtype === "string") {
-      if (label === "greaterThanFive" || label === "validDate") return true;
+      if (label === "Greater than or equal to 5" || label === "Valid Date") return true;
     }
     if (fieldtype === "number") {
       if (
-        label === "startsWithCapital" ||
-        label === "emailFormat" ||
-        label === "noSpecialChars" ||
-        label === "validDate"
+        label === "Begin with a capital letter" ||
+        label === "Valid email address" ||
+        label === "Not contain special chars" ||
+        label === "Valid Date"
       )
         return true;
     }
 
     if (fieldtype === "date") {
       if (
-        label === "startsWithCapital" ||
-        label === "emailFormat" ||
-        label === "noSpecialChars" ||
-        label === "greaterThanFive"
+        label === "Begin with a capital letter" ||
+        label === "Valid email address" ||
+        label === "Not contain special chars" ||
+        label === "Greater than or equal to 5"
       )
         return true;
     }
 
-    if (email === "1" && label === "noSpecialChars") {
+    if (validationRulesValues.emailFormat === "1" && label === "Not contain special chars") {
       return true;
     }
 
-    if (noSpecialChars === "1" && label === "emailFormat") {
+    if (validationRulesValues.noSpecialChars === "1" && label === "Valid email address") {
       return true;
     }
   };
@@ -71,13 +72,6 @@ export const SwitchField = ({
   return (
     <FormControlLabel
       disabled={ validation(fieldtype)}
-    //   control={
-    //     <Checkbox
-    //       // checked={value === "1"}
-    //       checked={checked}
-    //       onChange={handleChange}
-    //     />
-    //   }
       control={
           <Switch
             checked={checked}

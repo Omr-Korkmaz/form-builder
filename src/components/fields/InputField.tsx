@@ -1,12 +1,14 @@
 import { ChangeEvent, useState } from "react";
 import { TextField, TextFieldProps } from "@mui/material";
 import { validationRules } from "../../utils/validationRules";
+import { Field } from "../../store/form";
+
 
 type InputFieldProps = Omit<TextFieldProps, "onChange"> & {
   label: string;
   value: string;
   onChange: (value: string) => void;
-  field?: any;
+  field?: Field;
   section?: string;
 };
 
@@ -24,13 +26,12 @@ export const InputField = ({
   ...rest
 }: InputFieldProps) => {
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
-
   const getItemName = (
     object: Record<string, string>,
     value: string
   ): string[] => {
     const keys: string[] = [];
-    for (let key in object) {
+    for (const key in object) {
       if (object[key] === value) {
         keys.push(key);
       }
@@ -38,11 +39,11 @@ export const InputField = ({
     return keys;
   };
 
-  const itemName = getItemName(field?.validationRules, "1");
+  const itemName = field && getItemName( field?.validationRules, "1");
 
   const validateInput = (value: string, type: string, rules: string[]) => {
     setErrorMessage([]); // clear error messages
-    // Perform basic type validation
+
     if (type === ParamType.Number && !/^\d+$/.test(value)) {
       setErrorMessage((prevErrorMessages) => [
         ...prevErrorMessages,
@@ -69,9 +70,9 @@ export const InputField = ({
   const handleBlur = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    validateInput(event.target.value, field?.type, itemName);
+    field && itemName && validateInput(event.target.value, field?.type, itemName);
   };
-
+console.log(field?.validationRules.required)
   return (
     <TextField
       label={label}
@@ -83,6 +84,7 @@ export const InputField = ({
       margin="normal"
       error={section === "view" && Boolean(errorMessage.length)}
       helperText={section === "view" && errorMessage}
+      required= {section === "view" && field?.validationRules.required === "1"}
       {...rest}
     />
   );
