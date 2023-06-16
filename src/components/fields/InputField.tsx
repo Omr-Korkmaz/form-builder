@@ -73,7 +73,6 @@ export const InputField = ({
       itemName &&
       validateInput(event.target.value, field?.type, itemName);
   };
-  console.log(field?.validationRules.required);
   return (
     <TextField
       label={label}

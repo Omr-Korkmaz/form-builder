@@ -53,7 +53,7 @@ export const SwitchField = ({
     }
 
     if (validationRulesValues.emailFormat === "1") {
-      if (label === "Not contain special chars" || label === "Valid Date")
+      if (label === "Not contain special chars" || label === "Valid Date" || label === "Valid email address" )
         return true;
     }
 
@@ -62,10 +62,9 @@ export const SwitchField = ({
         return true;
     }
     if (
-      validationRulesValues.startsWithCapital === "1" &&
-      label === "Valid Date"
-    ) {
-      return true;
+      validationRulesValues.startsWithCapital === "1") {
+        if (label === "Valid email address" || label === "Valid Date")
+        return true;
     }
 
     if (validationRulesValues.validDate === "1" && label !== "Valid Date") {

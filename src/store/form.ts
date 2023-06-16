@@ -7,13 +7,6 @@ export enum FieldType {
   Boolean = "boolean",
 }
 
-// export interface ValidationType {
-//     startsWithCapital:string,
-//     greaterThanFive:string,
-//     emailFormat:string,
-//     noSpecialChars:string,
-//     validDate:string,
-// }
 export type ValidationType = {
   [key: string]: string; //  index signature to provide string-based indexing
 };
@@ -67,7 +60,7 @@ export const formSlice = createSlice({
       field.value = value;
     },
 
-    removeField: (state, action: PayloadAction<string>) => {
+    removeField: (state, action: PayloadAction<string>) => { // Delete field when the action called
       const keyToRemove = action.payload;
       delete state.fields[keyToRemove];
     },

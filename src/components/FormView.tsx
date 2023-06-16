@@ -36,9 +36,9 @@ export const FormView = () => {
                   onChange={onChange}
                   value={value}
                   field={field}
-                  section="formPreview"
+                  section="formPreview" // to see  where the inputField belongs. depending on formPreview or FormBuilder display error message
                 />
-                <DeleteIcon
+                <DeleteIcon 
                   onClick={onRemove}
                   sx={{
                     position: "absolute",

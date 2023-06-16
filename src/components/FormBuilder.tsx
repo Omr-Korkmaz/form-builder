@@ -12,7 +12,7 @@ import { InputField } from "./fields/InputField.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/config.ts";
 import { SwitchField } from "./fields/SwitchField.tsx";
-import HelpPopover from "./fields/HelpPopover.tsx";
+import HelpPopover from "../utils/HelpPopover.tsx";
 
 export const FormBuilder = () => {
   const [currentType, setCurrentType] = useState("");
