@@ -43,7 +43,7 @@ Good luck!
 
 
 
-##Updated by Omer Korkmaz by adding the text below
+## Updated by Omer Korkmaz by adding the text below:
 
 
 # Project Description
