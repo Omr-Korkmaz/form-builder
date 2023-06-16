@@ -5,7 +5,7 @@ import { InputField } from "./fields/InputField.tsx";
 import { CheckboxField } from "./fields/CheckboxField.tsx";
 import { DateField } from "./fields/DateField.tsx";
 import { Box, Divider, Grid, Typography } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 export const FormView = () => {
   const { fields } = useSelector((state: RootState) => state.form);
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export const FormView = () => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  position:"relative"
+                  position: "relative",
                 }}
               >
                 <InputField
@@ -36,7 +36,7 @@ export const FormView = () => {
                   onChange={onChange}
                   value={value}
                   field={field}
-                  section="view"
+                  section="formPreview"
                 />
                 <DeleteIcon
                   onClick={onRemove}
@@ -44,16 +44,14 @@ export const FormView = () => {
                     position: "absolute",
                     right: -30,
                     top: 30,
-                    // transform: "translateY(-50%)",
                     cursor: "pointer",
                     "&:hover": {
-                        transform: "scale(1.15)",
-                        color: "#8f130c",
-                      },
-                      transition: "color 0.2s, transform 0.2s",
-                    }}
+                      transform: "scale(1.15)",
+                      color: "#8f130c",
+                    },
+                    transition: "color 0.2s, transform 0.2s",
+                  }}
                 />
-          
               </Box>
             </Grid>
           );
@@ -61,33 +59,34 @@ export const FormView = () => {
         case FieldType.Boolean:
           renderedFields.push(
             <Grid item xs={12} key={key}>
-                 <Box
+              <Box
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  position:"relative",
-                    borderRadius: 1,
-          border: 'thin dashed gray'
-
-               
+                  position: "relative",
+                  borderRadius: 1,
+                  border: "thin dashed lightGray",
                 }}
               >
-              <CheckboxField label={label} onChange={onChange} value={value}
-  />
-              <DeleteIcon
-                onClick={onRemove}
-                sx={{
+                <CheckboxField
+                  label={label}
+                  onChange={onChange}
+                  value={value}
+                  field={field}
+                />
+                <DeleteIcon
+                  onClick={onRemove}
+                  sx={{
                     position: "absolute",
                     right: -30,
                     top: 10,
                     "&:hover": {
-                        transform: "scale(1.15)",
-                        color: "#8f130c",
-                      },
-                      transition: "color 0.2s, transform 0.2s",
-                    }}
-              />
-            
+                      transform: "scale(1.15)",
+                      color: "#8f130c",
+                    },
+                    transition: "color 0.2s, transform 0.2s",
+                  }}
+                />
               </Box>
             </Grid>
           );
@@ -95,29 +94,32 @@ export const FormView = () => {
         case FieldType.Date:
           renderedFields.push(
             <Grid item xs={12} key={key}>
-                 <Box
+              <Box
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  position:"relative"
-
-                
+                  position: "relative",
                 }}
               >
-              <DateField label={label} onChange={onChange} value={value} />
-              <DeleteIcon
-                onClick={onRemove}
-                sx={{
+                <DateField
+                  field={field}
+                  label={label}
+                  onChange={onChange}
+                  value={value}
+                />
+                <DeleteIcon
+                  onClick={onRemove}
+                  sx={{
                     position: "absolute",
                     right: -30,
                     top: 30,
-                  "&:hover": {
-                        transform: "scale(1.15)",
-                    color: "#8f130c",
-                  },
-                  transition: "color 0.2s, transform 0.2s",
-                }}
-              />
+                    "&:hover": {
+                      transform: "scale(1.15)",
+                      color: "#8f130c",
+                    },
+                    transition: "color 0.2s, transform 0.2s",
+                  }}
+                />
               </Box>
             </Grid>
           );
@@ -128,7 +130,7 @@ export const FormView = () => {
   };
 
   return (
-    <Grid container spacing={2} sx={{ width: 300, margin: "auto",  pb:2  }}>
+    <Grid container spacing={2} sx={{ width: 300, margin: "auto", pb: 2 }}>
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
           Form Preview

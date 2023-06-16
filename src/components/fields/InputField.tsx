@@ -3,7 +3,6 @@ import { TextField, TextFieldProps } from "@mui/material";
 import { validationRules } from "../../utils/validationRules";
 import { Field } from "../../store/form";
 
-
 type InputFieldProps = Omit<TextFieldProps, "onChange"> & {
   label: string;
   value: string;
@@ -39,7 +38,7 @@ export const InputField = ({
     return keys;
   };
 
-  const itemName = field && getItemName( field?.validationRules, "1");
+  const itemName = field && getItemName(field?.validationRules, "1");
 
   const validateInput = (value: string, type: string, rules: string[]) => {
     setErrorMessage([]); // clear error messages
@@ -47,14 +46,14 @@ export const InputField = ({
     if (type === ParamType.Number && !/^\d+$/.test(value)) {
       setErrorMessage((prevErrorMessages) => [
         ...prevErrorMessages,
-        "type Error",
+        "Type error (Please enter a valid number)",
       ]);
     } else {
       validationRules.map((item) => {
         if (!item.rule(value) && rules.includes(item.name)) {
           setErrorMessage((prevErrorMessages) => [
             ...prevErrorMessages,
-            item.message,
+            item.errorMessage,
           ]);
         }
       });
@@ -70,9 +69,11 @@ export const InputField = ({
   const handleBlur = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    field && itemName && validateInput(event.target.value, field?.type, itemName);
+    field &&
+      itemName &&
+      validateInput(event.target.value, field?.type, itemName);
   };
-console.log(field?.validationRules.required)
+  console.log(field?.validationRules.required);
   return (
     <TextField
       label={label}
@@ -82,9 +83,11 @@ console.log(field?.validationRules.required)
       variant="outlined"
       fullWidth
       margin="normal"
-      error={section === "view" && Boolean(errorMessage.length)}
-      helperText={section === "view" && errorMessage}
-      required= {section === "view" && field?.validationRules.required === "1"}
+      error={section === "formPreview" && Boolean(errorMessage.length)}
+      helperText={section === "formPreview" && errorMessage}
+      required={
+        section === "formPreview" && field?.validationRules.required === "1"
+      }
       {...rest}
     />
   );

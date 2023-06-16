@@ -38,3 +38,47 @@ Submit your solution by pushing your code to a public GitHub repository. Ensure 
 Good luck!
 
 
+
+
+
+
+###### Updated by Omer Korkmaz by adding the text below ######
+
+
+# Project Description
+
+The Form Builder App allows users to create and validate form fields dynamically. It provides a user-friendly interface to define form fields, specify validation rules.
+
+# Key Features
+
+1. Dynamic Form Field Creation: Users can create form fields dynamically by providing a field type, key, label, and following validations 
+    - The entered value must be greater than or equal to 5.
+    - The input must begin with a capital letter.
+    - The input must match a specific pattern (e.g., an email format).
+    - The input must not contain any special characters.
+    - The input must be a valid date.
+
+2. Validation Rule Configuration: Users can define validation rules for each form field before add to form preview section. there are some combination for these validation. user can not select all validation at the same time. forexample:
+ 
+  - Depending on fieldtype:
+if selected fieldtype is number ("Greater than or equal to 5" and "Required Field" are active the others is disable )
+If the field type is set to string, the "Begin with a capital letter", "Not contain special chars", "Required Field", and "Valid email address" validations are active, while the others are disabled. 
+
+  - also the app provide combination depending on validation rules 
+   if Valid email address is selected Not contain special chars will be disable. (vice versa)
+
+
+3. Error Messages: Validation errors are displayed using the Material UI element attributes (error and helperText). Errors are triggered when the user clicks outside the field or on another field, indicating if the entered data is incorrect. Validation errors is not applied "Date" and "Boolean"  because these field type correct input by itself
+
+4. Remove Feature:  This is an extra feature. The app includes a feature to remove fields from the form preview section. Users can easily remove unwanted fields as needed.
+
+
+# Design Logic
+
+ 1. Form State Management: The FormState is managed using Redux, which provides a centralized store to handle form data and validation rules. 
+
+2. Validation Rules and Error Handling: The app utilizes the Material UI switch slide components to represent each validation rule. The validation logic is implemented in the switchField component, where the error messages are displayed based on the validation results.
+
+3. Reusable Components and Utils: The switchField component is designed to be reusable and handles the display and logic for each validation rule. The app also includes a utils folder and a validationRules file. The validationRules file consists of objects containing the name, rule, and error message for each validation rule. This structure enables easy management and configuration of validation rules.
+
+4. User Interface Design: The user interface is styled with hover effects and guide text, providing visual cues and hints to enhance the user experience. The interface adapts dynamically based on the selected field type, making it more intuitive and user-friendly.
