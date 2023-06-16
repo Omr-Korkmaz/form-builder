@@ -4,7 +4,12 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import { IconButton } from "@mui/material";
 
-export default function HelpPopover() {
+interface HelpPopoverProps {
+  content: string;
+}
+
+export const HelpPopover: React.FC<HelpPopoverProps> = ({ content }) => {
+
   // basic material UI popover to see explaniation about validation rules
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -48,9 +53,7 @@ export default function HelpPopover() {
         }}
       >
         <Typography sx={{ p: 2, width: "400px" }}>
-          In some cases, certain validation may turn disable others. ex: if the
-          "Valid email address" validation is chosen, the "Not contain special
-          chars" validation should be disabled. .
+          {content}
         </Typography>
       </Popover>
     </>

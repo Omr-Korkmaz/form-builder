@@ -12,7 +12,7 @@ import { InputField } from "./fields/InputField.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/config.ts";
 import { SwitchField } from "./fields/SwitchField.tsx";
-import HelpPopover from "../utils/HelpPopover.tsx";
+import {HelpPopover} from "../utils/HelpPopover.tsx";
 
 export const FormBuilder = () => {
   const [currentType, setCurrentType] = useState("");
@@ -28,18 +28,6 @@ export const FormBuilder = () => {
       validDate: "",
       required: "",
     });
-
-  //  const [currentValidationRules, setCurrentValidationRules] =
-  // useState<any>([
-  // {name:'startsWithCapital', values:"", label:'Begin with a capital letter'},
-  // {name:'greaterThanFive', values:"", label:'Greater than or equal to 5'},
-  //   { name:"emailFormat", values:"", label:'Valid email address'},
-  //   {name:" noSpecialChars",values:"", label:'Not contain special chars'},
-  //   {name:"validDate",values:"", label:'Valid Date'},
-
-  //   {name:"required",values:"", label:'Required field'},
-
-  // ]);
 
   const dispatch = useDispatch();
   const { fields } = useSelector((state: RootState) => state.form);
@@ -68,6 +56,7 @@ export const FormBuilder = () => {
         <Typography variant="h4" gutterBottom>
           Form Builder
         </Typography>
+
         <Divider sx={{ my: 2, borderWidth: 1 }} />
       </Grid>
       <Grid item xs={12}>
@@ -111,7 +100,9 @@ export const FormBuilder = () => {
           }}
         >
           <Box sx={{  marginLeft: "auto" }}>
-            <HelpPopover />
+            <HelpPopover content='In some cases, certain validation may turn disable others. ex: if the
+          (Valid email address) validation is chosen, the (Not contain special
+          chars) validation should be disabled.' />
           </Box>
 
           {!currentType && (
@@ -119,23 +110,7 @@ export const FormBuilder = () => {
               *Choose a field type to activate rules
             </Typography>
           )}
-          {/* {Object.keys(currentValidationRules).map((key: string) => (
-            <Grid item xs={12} key={key}>
-              <SwitchField
-                label={key}
-                onChange={(value: string) =>
-                  setCurrentValidationRules((prevState: ValidationType) => ({
-                    ...prevState,
-                    [key]: value,
-                  }))
-                }
-                value={currentValidationRules[key]}
-                fieldtype={currentType}
-                validationRulesValues={currentValidationRules}
-              />
-            </Grid>
-          ))} */}
-
+          
           <Grid item xs={12}>
             <SwitchField
               label={"Begin with a capital letter"}
