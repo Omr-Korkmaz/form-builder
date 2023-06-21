@@ -12,7 +12,7 @@ export const DateField = ({
   label,
   value,
   onChange,
-//   field,
+  field,
 }: DateFieldProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
@@ -20,7 +20,7 @@ export const DateField = ({
 
   return (
     <TextField
-    //   required={field?.validationRules.required === "1"}
+      required={field?.required === "1"}
       label={label}
       type="date"
       value={value}
