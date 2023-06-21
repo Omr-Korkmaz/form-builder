@@ -29,12 +29,6 @@ export const FormView = () => {
         case FieldType.String:
 
 
-        // if (regex && !regex.test(value)) {
-          
-        //       error: true,
-        //       helperText: "Invalid input.",
-          
-        //   }
 
           renderedFields.push(
             <Grid item xs={12} key={key}>
@@ -50,12 +44,9 @@ export const FormView = () => {
                   onChange={onChange}
                   value={value}
 
-                //   helperText={errorMessage}
-                //   regex={regex}
                   field={field}
                   section="formPreview" // to see  where the inputField belongs. depending on formPreview or FormBuilder display error message
-// regex={regex}
-                //   error={errorMessage !== undefined}
+
                 />
                 <DeleteIcon 
                   onClick={onRemove}
