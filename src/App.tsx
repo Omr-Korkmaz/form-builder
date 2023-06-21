@@ -2,44 +2,46 @@ import './App.css'
 import {FormBuilder} from "./components/FormBuilder.tsx";
 import {FormView} from "./components/FormView.tsx";
 import {Box, Grid} from "@mui/material";
+// import styled from '@emotion/styled'
+import { styled } from '@mui/system';
+
+
 
 function App() {
+
+
+  const FormContainer = styled(Box)`
+  display: flex;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 2px;
+
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  border: 1px solid gray;
+  padding: 20px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+`;
+
+  
     return (
-        <Grid container spacing={6} alignItems="flex-start">
-        
-            <Grid item xs={6}>
-            <Box
-        sx={{
-          display: 'flex',
-        //   width:'400px',
-        //   height:'600px',
-        //   p: 1,
-          mb:2,
-          bgcolor: 'background.paper',
-          borderRadius: 1,
-          border: '1px solid gray'
-        }}
-      >
-                <FormBuilder/>
-                </Box>
-            </Grid>
-            <Grid item xs={6}>
-            <Box
-        sx={{
-          display: 'flex',
-          width:'400px',
-        //   height:'600px',
-        //   p: 1,
-          mb:2,
-          bgcolor: 'background.paper',
-          borderRadius: 1,
-          border: '1px solid gray'
-        }}
-      >
-                <FormView/>
-                </Box>
-            </Grid>
-        </Grid>
+  
+
+      <Grid container spacing={12} alignItems="flex-start">
+      <Grid item xs={12} sm={6}>
+        <FormContainer>
+          <FormBuilder />
+        </FormContainer>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <FormContainer>
+          <FormView />
+        </FormContainer>
+      </Grid>
+    </Grid>
     )
 }
 

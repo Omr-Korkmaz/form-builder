@@ -6,9 +6,19 @@ import { CheckboxField } from "./fields/CheckboxField.tsx";
 import { DateField } from "./fields/DateField.tsx";
 import { Box, Divider, Grid, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+
+// import { validateInput } from "../utils/ValidateInput.tsx";
+// import {  useState } from "react";
+
+
 export const FormView = () => {
   const { fields } = useSelector((state: RootState) => state.form);
   const dispatch = useDispatch();
+
+// 
+//   const [customErrorMessage, setCustomErrorMessage] = useState<string>('');
+
+
 
   const renderFields = () => {
     const renderedFields = [];
@@ -19,10 +29,27 @@ export const FormView = () => {
       const value = field.value;
       const onRemove = () => dispatch(removeField(key)); //this key line added for extra feature
 
-    //   const errorMessage = field.errorMessage;
-    //   const regex = field.regex;
 
       console.log("viewsectoin", field)
+
+
+
+    //   const handleBlur = (
+    //     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    //   ) => {
+    //     if(field) {
+    //     const errorMessages = validateInput(
+    //         event.target.value,
+    //         field.type,
+    //         field.regexRules,
+    //         field.errorMessage
+    //       );
+    //       setCustomErrorMessage(errorMessages);
+    //     }
+    
+    //   };
+
+
 
       switch (field.type) {
         case FieldType.Number:
@@ -43,6 +70,11 @@ export const FormView = () => {
                   label={label}
                   onChange={onChange}
                   value={value}
+                  required = {field?.required==="1"}
+                //   onBlur={handleBlur}
+
+                //   error={Boolean(customErrorMessage?.length)}
+
 
                   field={field}
                   section="formPreview" // to see  where the inputField belongs. depending on formPreview or FormBuilder display error message
@@ -83,8 +115,7 @@ export const FormView = () => {
                   onChange={onChange}
                   value={value}
                   field={field}
-                // error={errorMessage !== undefined}
-                // helperText={errorMessage}
+
                 />
                 <DeleteIcon
                   onClick={onRemove}
@@ -115,12 +146,11 @@ export const FormView = () => {
               >
                 <DateField
                   field={field}
+                  
                   label={label}
                   onChange={onChange}
                   value={value}
 
-                //   error={errorMessage !== undefined}
-                //   helperText={errorMessage}
                 />
                 <DeleteIcon
                   onClick={onRemove}

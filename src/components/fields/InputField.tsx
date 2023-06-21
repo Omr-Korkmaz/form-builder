@@ -63,7 +63,7 @@ console.log(" Boolean(customErrorMessage.length)",Boolean(customErrorMessage.len
       fullWidth
       margin="normal"
       error={section === "formPreview" && Boolean(customErrorMessage.length)}
-required = {field?.required==="1"}
+// required = {field?.required==="1"}
       helperText={section === "formPreview" && Boolean(customErrorMessage) && customErrorMessage  }
 
       {...rest}

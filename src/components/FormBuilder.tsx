@@ -27,16 +27,7 @@ export const FormBuilder = () => {
   const [currentRequired, setCurrentRequired] = useState("false");
 
 
-//   const [currentValidationRules, setCurrentValidationRules] =
-//     useState<ValidationType>({
-//       startsWithCapital: "",
-//       greaterThanFive: "",
-//       emailFormat: "",
-//       noSpecialChars: "",
-//       validDate: "",
-//       required: "",
-//       other:"",
-//     });
+const [currentError, setCurrentError] = useState("");
 
 console.log("currentError", currentErrorMessage )
 console.log("currentRegex", currentRegex)
@@ -50,6 +41,10 @@ console.log("currentRegex", currentRegex)
       alert("Key already exists");
       return;
     }
+    if (!currentKey || !currentLabel) {
+        setCurrentError("not keep empty")
+        return;
+      }
 
    
 
@@ -61,7 +56,6 @@ console.log("currentRegex", currentRegex)
           key: currentKey,
           type: currentType as FieldType,
           label: currentLabel,
-        //   validationRules: currentValidationRules as ValidationType,
         errorMessage: currentErrorMessage,
         regexRules: regex,
         required: currentRequired
@@ -98,6 +92,8 @@ console.log("currentRegex", currentRegex)
           onChange={(value) => setCurrentKey(value)}
           label="Key"
           value={currentKey}
+          required
+          helperText={currentError}
         />
       </Grid>
       <Grid item xs={12}>
@@ -105,10 +101,11 @@ console.log("currentRegex", currentRegex)
           onChange={(value) => setCurrentLabel(value)}
           label="Label"
           value={currentLabel}
+          required
         />
       </Grid>
       <Grid item xs={12}>
-        <Box
+        {/* <Box
           sx={{
             display: "flex",
             alignItems: "flex-start",
@@ -119,34 +116,31 @@ console.log("currentRegex", currentRegex)
             borderRadius: 1,
             border: "thin dashed lightGray",
           }}
-        >
+        > */}
          
 
-          {!currentType && (
+          {/* {!currentType && (
             <Typography variant="subtitle2" gutterBottom sx={{ color: "red" }}>
               *Choose a field type to activate rules
             </Typography>
-          )}
+          )} */}
 
 
 
 
 <Grid container spacing={2}>
-      {/* ... */}
       <Grid item xs={12} display={"flex"}>
         <InputField
           onChange={(value) => setCurrentErrorMessage(value)}
-          label="Error Message"
+          label="Custom error message"
           value={currentErrorMessage}
         />
-           <HelpPopover content='In some cases, certain validation may turn disable others. ex: if the
-          (Valid email address) validation is chosen, the (Not contain special
-          chars) validation should be disabled.' />
+           <HelpPopover content='You can provide a specific error message to display when the input does not meet the validation rules (Custom pattern).' />
       </Grid>
       <Grid item xs={12} display={"flex"}>
         <InputField
           onChange={(value) => setCurrentRegex(value)}
-          label="Regex Rules"
+          label="Custom pattern"
           value={currentRegex}
           InputProps={{
             startAdornment: <InputAdornment  position="start">/</InputAdornment>,
@@ -155,9 +149,7 @@ console.log("currentRegex", currentRegex)
             
           }}
         />
-            <HelpPopover content='In some cases, certain validation may turn disable others. ex: if the
-          (Valid email address) validation is chosen, the (Not contain special
-          chars) validation should be disabled.' />
+            <HelpPopover content='You can provide a regular expression to create a specific validation for the current field. For example, to create a pattern that ensures the input does not contain any special characters, you can use the following regular expression: ^[a-zA-Z0-9\s]*$.' />
       </Grid>
       <Grid item xs={12}>
             <SwitchField
@@ -172,135 +164,7 @@ console.log("currentRegex", currentRegex)
     </Grid>
 
 
-
-
-
-
-          {/* <Grid item xs={12}>
-            <SwitchField
-              label={"Begin with a capital letter"}
-              onChange={(value: string) =>
-                setCurrentValidationRules((prevState: ValidationType) => ({
-                  ...prevState,
-                  startsWithCapital: value,
-                }))
-              }
-              value={currentValidationRules.startsWithCapital}
-              fieldtype={currentType}
-              validationRulesValues={currentValidationRules}
-            />
-          </Grid> */}
-
-          {/* <Grid item xs={12}>
-            <SwitchField
-              label={"Greater than or equal to 5"}
-              onChange={(value: string) =>
-                setCurrentValidationRules((prevState: ValidationType) => ({
-                  ...prevState,
-                  greaterThanFive: value,
-                }))
-              }
-              value={currentValidationRules.greaterThanFive}
-              fieldtype={currentType}
-              validationRulesValues={currentValidationRules}
-            />
-          </Grid> */}
-
-          {/* <Grid item xs={12}>
-            <SwitchField
-              label={"Valid email address"}
-              onChange={(value: string) =>
-                setCurrentValidationRules((prevState: ValidationType) => ({
-                  ...prevState,
-                  emailFormat: value,
-                }))
-              }
-              value={currentValidationRules.emailFormat}
-              fieldtype={currentType}
-              validationRulesValues={currentValidationRules}
-            />
-          </Grid> */}
-
-          {/* <Grid item xs={12}>
-            <SwitchField
-              label={"Not contain special chars"}
-              onChange={(value: string) =>
-                setCurrentValidationRules((prevState: ValidationType) => ({
-                  ...prevState,
-                  noSpecialChars: value,
-                }))
-              }
-              value={currentValidationRules.noSpecialChars}
-              fieldtype={currentType}
-              validationRulesValues={currentValidationRules}
-            />
-          </Grid> */}
-
-          {/* <Grid item xs={12}>
-            <SwitchField
-              label={"Valid Date"}
-              onChange={(value: string) =>
-                setCurrentValidationRules((prevState: ValidationType) => ({
-                  ...prevState,
-                  validDate: value,
-                }))
-              }
-              value={currentValidationRules.validDate}
-              fieldtype={currentType}
-              validationRulesValues={currentValidationRules}
-            />
-          </Grid> */}
-
-          {/* <Grid item xs={12}>
-            <SwitchField
-              label={"Required field"}
-              onChange={(value: string) =>
-                setCurrentValidationRules((prevState: ValidationType) => ({
-                  ...prevState,
-                  required: value,
-                }))
-              }
-              value={currentValidationRules.required}
-              fieldtype={currentType}
-              validationRulesValues={currentValidationRules}
-            />
-          </Grid> */}
-
-          {/* <Grid item xs={12}>
-            <SwitchField
-              label={"Custom Validation"}
-              onChange={(value: string) =>
-                setCurrentValidationRules((prevState: ValidationType) => ({
-                  ...prevState,
-                  other: value,
-                }))
-              }
-              value={currentValidationRules.other}
-              fieldtype={currentType}
-              validationRulesValues={currentValidationRules}
-            />
-          </Grid> */}
-
-{/* {currentValidationRules.other==="1" && 
-        <>  <Grid item xs={12}>
-        <InputField
-          onChange={(value) => setPattern(value)}
-          label="Custom Validation"
-          value={pattern}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <InputField
-          onChange={(value) => setErrorMessage(value)}
-          label="Error Message"
-          value={errorMessage}
-        />
-      </Grid>
-      </>
-    } */}
-
-
-        </Box>
+        {/* </Box> */}
 
         <Button variant="contained" color="primary" onClick={handleAddingField}>
           Add Field
