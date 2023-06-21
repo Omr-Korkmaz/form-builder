@@ -19,9 +19,23 @@ export const FormView = () => {
       const value = field.value;
       const onRemove = () => dispatch(removeField(key)); //this key line added for extra feature
 
+    //   const errorMessage = field.errorMessage;
+    //   const regex = field.regex;
+
+      console.log("viewsectoin", field)
+
       switch (field.type) {
         case FieldType.Number:
         case FieldType.String:
+
+
+        // if (regex && !regex.test(value)) {
+          
+        //       error: true,
+        //       helperText: "Invalid input.",
+          
+        //   }
+
           renderedFields.push(
             <Grid item xs={12} key={key}>
               <Box
@@ -35,8 +49,13 @@ export const FormView = () => {
                   label={label}
                   onChange={onChange}
                   value={value}
+
+                //   helperText={errorMessage}
+                //   regex={regex}
                   field={field}
                   section="formPreview" // to see  where the inputField belongs. depending on formPreview or FormBuilder display error message
+// regex={regex}
+                //   error={errorMessage !== undefined}
                 />
                 <DeleteIcon 
                   onClick={onRemove}
@@ -72,7 +91,9 @@ export const FormView = () => {
                   label={label}
                   onChange={onChange}
                   value={value}
-                  field={field}
+                //   field={field}
+                // error={errorMessage !== undefined}
+                // helperText={errorMessage}
                 />
                 <DeleteIcon
                   onClick={onRemove}
@@ -106,6 +127,8 @@ export const FormView = () => {
                   label={label}
                   onChange={onChange}
                   value={value}
+                //   error={errorMessage !== undefined}
+                //   helperText={errorMessage}
                 />
                 <DeleteIcon
                   onClick={onRemove}
@@ -125,6 +148,7 @@ export const FormView = () => {
           );
       }
     }
+    
 
     return renderedFields;
   };

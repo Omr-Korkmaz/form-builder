@@ -12,7 +12,7 @@ export const CheckboxField = ({
   label,
   value,
   onChange,
-  field,
+//   field,
 }: CheckboxFieldProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.checked ? "1" : "0");
@@ -22,7 +22,7 @@ export const CheckboxField = ({
     <FormControlLabel
       control={
         <Checkbox
-          required={field?.validationRules.required === "1"}
+        //   required={field?.validationRules.required === "1"}
           checked={value === "1"}
           onChange={handleChange}
         />

@@ -16,7 +16,11 @@ export type Field = {
   type: FieldType;
   label: string;
   value: string;
-  validationRules: ValidationType;
+//   validationRules: ValidationType;
+errorMessage?: string,
+regexRules?: RegExp,
+required?:string,
+
 };
 
 export interface FormState {
@@ -37,17 +41,23 @@ export const formSlice = createSlice({
         key: string;
         type: FieldType;
         label: string;
-        validationRules: ValidationType;
+        errorMessage?: string,
+        regexRules?: RegExp,
+        required?:string   
+         // validationRules: ValidationType;
       }>
     ) => {
-      const { key, type, label, validationRules } = action.payload;
+      const { key, type, label,  errorMessage, regexRules, required } = action.payload;
 
       state.fields[key] = {
         key,
         type,
         label,
         value: "",
-        validationRules,
+        // validationRules,
+        errorMessage,
+        regexRules,
+        required
       };
     },
     setValue: (

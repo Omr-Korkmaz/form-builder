@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { TextField, TextFieldProps } from "@mui/material";
-import { validationRules } from "../../utils/validationRules";
 import { Field } from "../../store/form";
+import { validateInput } from "../../utils/ValidateInput";
 
 type InputFieldProps = Omit<TextFieldProps, "onChange"> & {
   label: string;
@@ -11,11 +11,6 @@ type InputFieldProps = Omit<TextFieldProps, "onChange"> & {
   section?: string;
 };
 
-enum ParamType {
-  Number = "number",
-  String = "string",
-}
-
 export const InputField = ({
   label,
   value,
@@ -24,54 +19,39 @@ export const InputField = ({
   section,
   ...rest
 }: InputFieldProps) => {
-  const [errorMessage, setErrorMessage] = useState<string[]>([]);
-  const getItemName = (
-    object: Record<string, string>,
-    value: string
-  ): string[] => {
-    const keys: string[] = [];
-    for (const key in object) {
-      if (object[key] === value) {
-        keys.push(key);
-      }
-    }
-    return keys;
-  };
+  const [customErrorMessage, setCustomErrorMessage] = useState<string>('');
 
-  const itemName = field && getItemName(field?.validationRules, "1");
+console.log("value", value)
 
-  const validateInput = (value: string, type: string, rules: string[]) => {
-    setErrorMessage([]); // clear error messages
 
-    if (type === ParamType.Number && !/^\d+$/.test(value)) {
-      setErrorMessage((prevErrorMessages) => [
-        ...prevErrorMessages,
-        "Type error (Please enter a valid number)",
-      ]);
-    } else {
-      validationRules.map((item) => {
-        if (!item.rule(value) && rules.includes(item.name)) {
-          setErrorMessage((prevErrorMessages) => [
-            ...prevErrorMessages,
-            item.errorMessage,
-          ]);
-        }
-      });
-    }
-  };
+console.log("Regex Rule", field?.regexRules)
+
+console.log("Error M", field?.errorMessage)
+
+console.log(" Boolean(customErrorMessage.length)",Boolean(customErrorMessage.length))
+
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       onChange(event.target.value);
+
+
     }
   };
 
   const handleBlur = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    field &&
-      itemName &&
-      validateInput(event.target.value, field?.type, itemName);
+    if(field) {
+    const errorMessage = validateInput(
+        event.target.value,
+        field.type,
+        field.regexRules,
+        field.errorMessage
+      );
+      setCustomErrorMessage(errorMessage);
+    }
+
   };
   return (
     <TextField
@@ -82,11 +62,10 @@ export const InputField = ({
       variant="outlined"
       fullWidth
       margin="normal"
-      error={section === "formPreview" && Boolean(errorMessage.length)}
-      helperText={section === "formPreview" && errorMessage}
-      required={
-        section === "formPreview" && field?.validationRules.required === "1"
-      }
+      error={section === "formPreview" && Boolean(customErrorMessage.length)}
+required = {field?.required==="1"}
+      helperText={section === "formPreview" && Boolean(customErrorMessage) && customErrorMessage  }
+
       {...rest}
     />
   );

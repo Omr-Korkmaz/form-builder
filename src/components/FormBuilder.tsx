@@ -1,50 +1,71 @@
 import { Dropdown } from "./fields/Dropdown.tsx";
 import { useState } from "react";
-import { addField, FieldType, ValidationType } from "../store/form.ts";
+import { addField, FieldType,
+    //  ValidationType
+     } from "../store/form.ts";
 import {
   Button,
   Grid,
   Typography,
   Box,
   Divider,
+  InputAdornment,
 } from "@mui/material";
 import { InputField } from "./fields/InputField.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/config.ts";
-import { SwitchField } from "./fields/SwitchField.tsx";
 import {HelpPopover} from "../utils/HelpPopover.tsx";
+import { SwitchField } from "./fields/SwitchField.tsx";
 
 export const FormBuilder = () => {
   const [currentType, setCurrentType] = useState("");
   const [currentKey, setCurrentKey] = useState("");
   const [currentLabel, setCurrentLabel] = useState("");
 
-  const [currentValidationRules, setCurrentValidationRules] =
-    useState<ValidationType>({
-      startsWithCapital: "",
-      greaterThanFive: "",
-      emailFormat: "",
-      noSpecialChars: "",
-      validDate: "",
-      required: "",
-    });
+  const [currentErrorMessage, setCurrentErrorMessage] = useState("");
+  const [currentRegex, setCurrentRegex] = useState("");
+  const [currentRequired, setCurrentRequired] = useState("false");
 
+
+//   const [currentValidationRules, setCurrentValidationRules] =
+//     useState<ValidationType>({
+//       startsWithCapital: "",
+//       greaterThanFive: "",
+//       emailFormat: "",
+//       noSpecialChars: "",
+//       validDate: "",
+//       required: "",
+//       other:"",
+//     });
+
+console.log("currentError", currentErrorMessage )
+console.log("currentRegex", currentRegex)
   const dispatch = useDispatch();
   const { fields } = useSelector((state: RootState) => state.form);
 
   const handleAddingField = () => {
+
+    
     if (fields[currentKey] !== undefined) {
       alert("Key already exists");
       return;
     }
 
+   
+
     if (currentType && currentKey && currentLabel) {
+        const regex = currentRegex ? new RegExp(currentRegex) : undefined;
+
       dispatch(
         addField({
           key: currentKey,
           type: currentType as FieldType,
           label: currentLabel,
-          validationRules: currentValidationRules as ValidationType,
+        //   validationRules: currentValidationRules as ValidationType,
+        errorMessage: currentErrorMessage,
+        regexRules: regex,
+        required: currentRequired
+
         })
       );
     }
@@ -99,19 +120,63 @@ export const FormBuilder = () => {
             border: "thin dashed lightGray",
           }}
         >
-          <Box sx={{  marginLeft: "auto" }}>
-            <HelpPopover content='In some cases, certain validation may turn disable others. ex: if the
-          (Valid email address) validation is chosen, the (Not contain special
-          chars) validation should be disabled.' />
-          </Box>
+         
 
           {!currentType && (
             <Typography variant="subtitle2" gutterBottom sx={{ color: "red" }}>
               *Choose a field type to activate rules
             </Typography>
           )}
-          
-          <Grid item xs={12}>
+
+
+
+
+<Grid container spacing={2}>
+      {/* ... */}
+      <Grid item xs={12} display={"flex"}>
+        <InputField
+          onChange={(value) => setCurrentErrorMessage(value)}
+          label="Error Message"
+          value={currentErrorMessage}
+        />
+           <HelpPopover content='In some cases, certain validation may turn disable others. ex: if the
+          (Valid email address) validation is chosen, the (Not contain special
+          chars) validation should be disabled.' />
+      </Grid>
+      <Grid item xs={12} display={"flex"}>
+        <InputField
+          onChange={(value) => setCurrentRegex(value)}
+          label="Regex Rules"
+          value={currentRegex}
+          InputProps={{
+            startAdornment: <InputAdornment  position="start">/</InputAdornment>,
+            endAdornment:<InputAdornment position="end">/</InputAdornment>
+
+            
+          }}
+        />
+            <HelpPopover content='In some cases, certain validation may turn disable others. ex: if the
+          (Valid email address) validation is chosen, the (Not contain special
+          chars) validation should be disabled.' />
+      </Grid>
+      <Grid item xs={12}>
+            <SwitchField
+              label={"Required"}
+              onChange={(value: string) =>
+                setCurrentRequired(value)
+              }
+              value={currentRequired}
+              fieldtype={currentType}
+            />
+          </Grid>
+    </Grid>
+
+
+
+
+
+
+          {/* <Grid item xs={12}>
             <SwitchField
               label={"Begin with a capital letter"}
               onChange={(value: string) =>
@@ -124,9 +189,9 @@ export const FormBuilder = () => {
               fieldtype={currentType}
               validationRulesValues={currentValidationRules}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <SwitchField
               label={"Greater than or equal to 5"}
               onChange={(value: string) =>
@@ -139,9 +204,9 @@ export const FormBuilder = () => {
               fieldtype={currentType}
               validationRulesValues={currentValidationRules}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <SwitchField
               label={"Valid email address"}
               onChange={(value: string) =>
@@ -154,9 +219,9 @@ export const FormBuilder = () => {
               fieldtype={currentType}
               validationRulesValues={currentValidationRules}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <SwitchField
               label={"Not contain special chars"}
               onChange={(value: string) =>
@@ -169,9 +234,9 @@ export const FormBuilder = () => {
               fieldtype={currentType}
               validationRulesValues={currentValidationRules}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <SwitchField
               label={"Valid Date"}
               onChange={(value: string) =>
@@ -184,9 +249,9 @@ export const FormBuilder = () => {
               fieldtype={currentType}
               validationRulesValues={currentValidationRules}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <SwitchField
               label={"Required field"}
               onChange={(value: string) =>
@@ -199,7 +264,42 @@ export const FormBuilder = () => {
               fieldtype={currentType}
               validationRulesValues={currentValidationRules}
             />
-          </Grid>
+          </Grid> */}
+
+          {/* <Grid item xs={12}>
+            <SwitchField
+              label={"Custom Validation"}
+              onChange={(value: string) =>
+                setCurrentValidationRules((prevState: ValidationType) => ({
+                  ...prevState,
+                  other: value,
+                }))
+              }
+              value={currentValidationRules.other}
+              fieldtype={currentType}
+              validationRulesValues={currentValidationRules}
+            />
+          </Grid> */}
+
+{/* {currentValidationRules.other==="1" && 
+        <>  <Grid item xs={12}>
+        <InputField
+          onChange={(value) => setPattern(value)}
+          label="Custom Validation"
+          value={pattern}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <InputField
+          onChange={(value) => setErrorMessage(value)}
+          label="Error Message"
+          value={errorMessage}
+        />
+      </Grid>
+      </>
+    } */}
+
+
         </Box>
 
         <Button variant="contained" color="primary" onClick={handleAddingField}>
