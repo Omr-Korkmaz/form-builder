@@ -38,7 +38,7 @@ export const SwitchField = ({
         <Switch
           checked={checked}
           onChange={handleChange}
-          color="primary"
+          color="secondary"
           inputProps={{ "aria-label": "checkbox" }}
         />
       }

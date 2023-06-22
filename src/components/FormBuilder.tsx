@@ -1,5 +1,5 @@
 import { Dropdown } from "./fields/Dropdown.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addField, FieldType,
     //  ValidationType
      } from "../store/form.ts";
@@ -7,7 +7,6 @@ import {
   Button,
   Grid,
   Typography,
-  Box,
   Divider,
   InputAdornment,
 } from "@mui/material";
@@ -29,6 +28,35 @@ export const FormBuilder = () => {
 
 const [currentError, setCurrentError] = useState("");
 
+
+useEffect(() => {
+    // setChecked(false); // Reset the checkbox state when fieldtype changes
+
+    setCurrentKey("");
+    setCurrentLabel("")
+    setCurrentErrorMessage("")
+    setCurrentRegex("")
+    setCurrentRequired("")
+//     const [currentKey, setCurrentKey] = useState("");
+//     const [currentLabel, setCurrentLabel] = useState("");
+  
+//     const [currentErrorMessage, setCurrentErrorMessage] = useState("");
+//     const [currentRegex, setCurrentRegex] = useState("");
+//     const [currentRequired, setCurrentRequired] = useState("false");
+  
+  
+//   const [currentError, setCurrentError] = useState("");
+
+
+//     onChange("0");
+  }, [currentType]);
+
+
+
+
+
+
+
 console.log("currentError", currentErrorMessage )
 console.log("currentRegex", currentRegex)
   const dispatch = useDispatch();
@@ -49,14 +77,14 @@ console.log("currentRegex", currentRegex)
    
 
     if (currentType && currentKey && currentLabel) {
-        const regex = currentRegex ? new RegExp(currentRegex) : undefined;
+        const regex = currentRegex.trim() ? new RegExp(currentRegex.trim()) : undefined;
 
       dispatch(
         addField({
-          key: currentKey,
+          key: currentKey.trim(),
           type: currentType as FieldType,
-          label: currentLabel,
-        errorMessage: currentErrorMessage,
+          label: currentLabel.trim(),
+        errorMessage: currentErrorMessage.trim(),
         regexRules: regex,
         required: currentRequired
 
@@ -66,7 +94,7 @@ console.log("currentRegex", currentRegex)
   };
 
   return (
-    <Grid container spacing={2} sx={{ width: 300, margin: "auto", pb: 2 }}>
+    <Grid container spacing={2} sx={{ width: 500, margin: "auto", pb: 2 }}>
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
           Form Builder
@@ -151,7 +179,7 @@ console.log("currentRegex", currentRegex)
         />
             <HelpPopover content='You can provide a regular expression to create a specific validation for the current field. For example, to create a pattern that ensures the input does not contain any special characters, you can use the following regular expression: ^[a-zA-Z0-9\s]*$.' />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6} marginRight={"auto"}>
             <SwitchField
               label={"Required"}
               onChange={(value: string) =>
@@ -164,11 +192,19 @@ console.log("currentRegex", currentRegex)
     </Grid>
 
 
-        {/* </Box> */}
 
+
+
+
+
+
+    <Divider sx={{ my: 1, borderWidth: 1 }} />
+
+        <Grid item xs={12} marginTop={"10px"} >
         <Button variant="contained" color="primary" onClick={handleAddingField}>
           Add Field
         </Button>
+      </Grid>
       </Grid>
     </Grid>
   );

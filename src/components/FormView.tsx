@@ -7,7 +7,8 @@ import { DateField } from "./fields/DateField.tsx";
 import { Box, Divider, Grid, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-// import { validateInput } from "../utils/ValidateInput.tsx";
+import { validateInput } from "../utils/ValidateInput.tsx";
+import { useState } from "react";
 // import {  useState } from "react";
 
 
@@ -15,11 +16,28 @@ export const FormView = () => {
   const { fields } = useSelector((state: RootState) => state.form);
   const dispatch = useDispatch();
 
-// 
-//   const [customErrorMessage, setCustomErrorMessage] = useState<string>('');
+
+const [customErrorMessages, setCustomErrorMessages] = useState<Record<string, string>>({});
+
+const handleBlur = (key: string, value: string, type: FieldType, pattern: RegExp, errorMessage: string) => {
+    const errorMessages = validateInput(value, type, pattern, errorMessage);
+    setCustomErrorMessages((prevErrors) => ({
+      ...prevErrors,
+      [key]: errorMessages,
+    }));
+  };
+
+  const handleRemoveField = (key: string) => {
+    setCustomErrorMessages((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+      delete updatedErrors[key];
+      return updatedErrors;
+    });
+    dispatch(removeField(key));
+  };
 
 
-
+console.log("customErrorMessages", customErrorMessages)
   const renderFields = () => {
     const renderedFields = [];
     for (const key in fields) {
@@ -27,27 +45,9 @@ export const FormView = () => {
       const label = field.label;
       const onChange = (value: string) => dispatch(setValue({ key, value }));
       const value = field.value;
-      const onRemove = () => dispatch(removeField(key)); //this key line added for extra feature
+    //   const onRemove = () => dispatch(removeField(key)); //this key line added for extra feature
 
-
-      console.log("viewsectoin", field)
-
-
-
-    //   const handleBlur = (
-    //     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    //   ) => {
-    //     if(field) {
-    //     const errorMessages = validateInput(
-    //         event.target.value,
-    //         field.type,
-    //         field.regexRules,
-    //         field.errorMessage
-    //       );
-    //       setCustomErrorMessage(errorMessages);
-    //     }
-    
-    //   };
+      const onRemove = () => handleRemoveField(key); //this key line added for extra feature
 
 
 
@@ -71,13 +71,16 @@ export const FormView = () => {
                   onChange={onChange}
                   value={value}
                   required = {field?.required==="1"}
-                //   onBlur={handleBlur}
+                  helperText={Boolean(customErrorMessages[key]) && customErrorMessages[key]  }
+                  error={Boolean(customErrorMessages[key])}
 
-                //   error={Boolean(customErrorMessage?.length)}
+                onBlur= {() =>
+                handleBlur(key, value, field.type, field.regexRules, field.errorMessage)}
+            
 
 
-                  field={field}
-                  section="formPreview" // to see  where the inputField belongs. depending on formPreview or FormBuilder display error message
+                //   field={field}
+                //   section="formPreview" // to see  where the inputField belongs. depending on formPreview or FormBuilder display error message
 
                 />
                 <DeleteIcon 
@@ -176,7 +179,7 @@ export const FormView = () => {
   };
 
   return (
-    <Grid container spacing={2} sx={{ width: 300, margin: "auto", pb: 2 }}>
+    <Grid container spacing={2} sx={{ width: 500, margin: "auto", pb: 2 }}>
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
           Form Preview

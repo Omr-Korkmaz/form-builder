@@ -12,14 +12,18 @@ function App() {
 
   const FormContainer = styled(Box)`
   display: flex;
-  width: 100%;
-  max-width: 300px;
+  /* width: 100%; */
+  max-width: 400px;
   margin-bottom: 2px;
 
-  background-color: #f9f9f9;
+  /* background-color: #f9f9f9; */
   border-radius: 4px;
   border: 1px solid gray;
   padding: 20px;
+  height: '100vh';
+  align-items: 'center';
+            justify-content: 'center';
+
 
   @media (max-width: 600px) {
     flex-direction: column;

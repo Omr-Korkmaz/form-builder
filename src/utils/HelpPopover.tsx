@@ -34,8 +34,9 @@ export const HelpPopover: React.FC<HelpPopoverProps> = ({ content }) => {
           "&:focus": { outline: "none" },
           cursor: "pointer",
           "&:hover": {
-            transform: "scale(1.15)",
+            // transform: "scale(1.15)",
             color: "#0d69e6",
+            borderRadius: "50%",
           },
           transition: "color 0.2s, transform 0.2s",
         }}
@@ -52,7 +53,7 @@ export const HelpPopover: React.FC<HelpPopoverProps> = ({ content }) => {
           horizontal: "left",
         }}
       >
-        <Typography sx={{ p: 2, width: "400px" }}>
+        <Typography sx={{ p: 2, width: "360px" }}>
           {content}
         </Typography>
       </Popover>
