@@ -19,7 +19,7 @@ export const FormView = () => {
 
 const [customErrorMessages, setCustomErrorMessages] = useState<Record<string, string>>({});
 
-const handleBlur = (key: string, value: string, type: FieldType, pattern: RegExp, errorMessage: string) => {
+const handleBlur = (key: string, value: string, type: FieldType, pattern: RegExp | undefined, errorMessage: string | undefined) => {
     const errorMessages = validateInput(value, type, pattern, errorMessage);
     setCustomErrorMessages((prevErrors) => ({
       ...prevErrors,
@@ -75,7 +75,7 @@ console.log("customErrorMessages", customErrorMessages)
                   error={Boolean(customErrorMessages[key])}
 
                 onBlur= {() =>
-                handleBlur(key, value, field.type, field.regexRules, field.errorMessage)}
+                handleBlur(key, value, field.type, field?.regexRules, field?.errorMessage)}
             
 
 

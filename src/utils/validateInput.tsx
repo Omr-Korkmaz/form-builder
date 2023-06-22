@@ -6,9 +6,9 @@ enum ParamType {
   export const validateInput = (
     value: string,
     type: string,
-    regex: RegExp | undefined,
+    regex?: RegExp | undefined,
     
-    errorMessage: string | undefined
+    errorMessage?: string | undefined
   ): string => {
     if (type === ParamType.Number && !/^\d+$/.test(value)) {
       return "Type error";
