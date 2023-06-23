@@ -30,6 +30,22 @@ export const FormBuilder = () => {
 
   const [currentError, setCurrentError] = useState("");
 
+  const [showAdditionalInputs, setShowAdditionalInputs] = useState(false);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (currentType === "number" || currentType === "string") {
+        setShowAdditionalInputs(true);
+      } else {
+        setShowAdditionalInputs(false);
+      }
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, [currentType]);
+
+
   useEffect(() => {
     setCurrentKey("");
     setCurrentLabel("");
@@ -70,7 +86,7 @@ export const FormBuilder = () => {
   };
 
   return (
-    <Grid container spacing={2} sx={{ width: 500, margin: "auto", pb: 2 }}>
+<Grid container spacing={2} sx={{ minWidth: { xs: '100%' }, margin: 'auto', py: 2, px: 6 }}>
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
           Form Builder
@@ -111,8 +127,12 @@ export const FormBuilder = () => {
       <Grid item xs={12}>
         <Grid container spacing={2}>
           {(currentType === "number" || currentType === "string") && (
-            <Container>
-              <Grid item xs={12} display={"flex"}>
+   <Container
+              sx={{
+                opacity: showAdditionalInputs ? 1 : 0,
+                transition: "opacity 0.1s",
+              }}
+            >              <Grid item xs={12} display={"flex"}>
                 <InputField
                   onChange={(value) => setCurrentErrorMessage(value)}
                   label="Custom error message"

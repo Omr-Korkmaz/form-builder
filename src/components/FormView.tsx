@@ -62,7 +62,6 @@ export const FormView = () => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  position: "relative",
                 }}
               >
                 <InputField
@@ -88,9 +87,6 @@ export const FormView = () => {
                 <DeleteIcon
                   onClick={onRemove}
                   sx={{
-                    position: "absolute",
-                    right: -30,
-                    top: 30,
                     cursor: "pointer",
                     "&:hover": {
                       transform: "scale(1.15)",
@@ -177,7 +173,7 @@ export const FormView = () => {
   };
 
   return (
-    <Grid container spacing={2} sx={{ width: 500, margin: "auto", pb: 2 }}>
+<Grid container spacing={2} sx={{ width: { xs: '100%' }, margin: 'auto', pb: 2 }}>
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
           Form Preview
