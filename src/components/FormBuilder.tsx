@@ -1,19 +1,22 @@
 import { Dropdown } from "./fields/Dropdown.tsx";
 import { useEffect, useState } from "react";
-import { addField, FieldType,
-    //  ValidationType
-     } from "../store/form.ts";
+import {
+  addField,
+  FieldType,
+  //  ValidationType
+} from "../store/form.ts";
 import {
   Button,
   Grid,
   Typography,
   Divider,
   InputAdornment,
+  Container,
 } from "@mui/material";
 import { InputField } from "./fields/InputField.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/config.ts";
-import {HelpPopover} from "../utils/HelpPopover.tsx";
+import { HelpPopover } from "../utils/HelpPopover.tsx";
 import { SwitchField } from "./fields/SwitchField.tsx";
 
 export const FormBuilder = () => {
@@ -25,69 +28,42 @@ export const FormBuilder = () => {
   const [currentRegex, setCurrentRegex] = useState("");
   const [currentRequired, setCurrentRequired] = useState("false");
 
+  const [currentError, setCurrentError] = useState("");
 
-const [currentError, setCurrentError] = useState("");
-
-
-useEffect(() => {
-    // setChecked(false); // Reset the checkbox state when fieldtype changes
-
+  useEffect(() => {
     setCurrentKey("");
-    setCurrentLabel("")
-    setCurrentErrorMessage("")
-    setCurrentRegex("")
-    setCurrentRequired("")
-//     const [currentKey, setCurrentKey] = useState("");
-//     const [currentLabel, setCurrentLabel] = useState("");
-  
-//     const [currentErrorMessage, setCurrentErrorMessage] = useState("");
-//     const [currentRegex, setCurrentRegex] = useState("");
-//     const [currentRequired, setCurrentRequired] = useState("false");
-  
-  
-//   const [currentError, setCurrentError] = useState("");
-
-
-//     onChange("0");
+    setCurrentLabel("");
+    setCurrentErrorMessage("");
+    setCurrentRegex("");
+    setCurrentRequired("");
   }, [currentType]);
 
-
-
-
-
-
-
-console.log("currentError", currentErrorMessage )
-console.log("currentRegex", currentRegex)
   const dispatch = useDispatch();
   const { fields } = useSelector((state: RootState) => state.form);
 
   const handleAddingField = () => {
-
-    
     if (fields[currentKey] !== undefined) {
       alert("Key already exists");
       return;
     }
     if (!currentKey || !currentLabel) {
-        setCurrentError("not keep empty")
-        return;
-      }
-
-   
+      setCurrentError("not keep empty");
+      return;
+    }
 
     if (currentType && currentKey && currentLabel) {
-        const regex = currentRegex.trim() ? new RegExp(currentRegex.trim()) : undefined;
+      const regex = currentRegex.trim()
+        ? new RegExp(currentRegex.trim())
+        : undefined;
 
       dispatch(
         addField({
           key: currentKey.trim(),
           type: currentType as FieldType,
           label: currentLabel.trim(),
-        errorMessage: currentErrorMessage.trim(),
-        regexRules: regex,
-        required: currentRequired
-
+          errorMessage: currentErrorMessage.trim(),
+          regexRules: regex,
+          required: currentRequired,
         })
       );
     }
@@ -133,78 +109,57 @@ console.log("currentRegex", currentRegex)
         />
       </Grid>
       <Grid item xs={12}>
-        {/* <Box
-          sx={{
-            display: "flex",
-            alignItems: "flex-start",
-            flexDirection: "column",
-            p: 1,
-            mb: 2,
-            bgcolor: "background.paper",
-            borderRadius: 1,
-            border: "thin dashed lightGray",
-          }}
-        > */}
-         
+        <Grid container spacing={2}>
+          {(currentType === "number" || currentType === "string") && (
+            <Container>
+              <Grid item xs={12} display={"flex"}>
+                <InputField
+                  onChange={(value) => setCurrentErrorMessage(value)}
+                  label="Custom error message"
+                  value={currentErrorMessage}
+                />
+                <HelpPopover content="You can provide a specific error message to display when the input does not meet the validation rules (Custom pattern)." />
+              </Grid>
+              <Grid item xs={12} display={"flex"}>
+                <InputField
+                  onChange={(value) => setCurrentRegex(value)}
+                  label="Custom pattern"
+                  value={currentRegex}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">/</InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">/</InputAdornment>
+                    ),
+                  }}
+                />
+                <HelpPopover content="You can provide a regular expression to create a specific validation for the current field. For example, to create a pattern that ensures the input does not contain any special characters, you can use the following regular expression: ^[a-zA-Z0-9\s]*$." />
+              </Grid>
+            </Container>
+          )}
 
-          {/* {!currentType && (
-            <Typography variant="subtitle2" gutterBottom sx={{ color: "red" }}>
-              *Choose a field type to activate rules
-            </Typography>
-          )} */}
-
-
-
-
-<Grid container spacing={2}>
-      <Grid item xs={12} display={"flex"}>
-        <InputField
-          onChange={(value) => setCurrentErrorMessage(value)}
-          label="Custom error message"
-          value={currentErrorMessage}
-        />
-           <HelpPopover content='You can provide a specific error message to display when the input does not meet the validation rules (Custom pattern).' />
-      </Grid>
-      <Grid item xs={12} display={"flex"}>
-        <InputField
-          onChange={(value) => setCurrentRegex(value)}
-          label="Custom pattern"
-          value={currentRegex}
-          InputProps={{
-            startAdornment: <InputAdornment  position="start">/</InputAdornment>,
-            endAdornment:<InputAdornment position="end">/</InputAdornment>
-
-            
-          }}
-        />
-            <HelpPopover content='You can provide a regular expression to create a specific validation for the current field. For example, to create a pattern that ensures the input does not contain any special characters, you can use the following regular expression: ^[a-zA-Z0-9\s]*$.' />
-      </Grid>
-      <Grid item xs={6} marginRight={"auto"}>
+          <Grid item xs={4} marginRight={"auto"}>
             <SwitchField
               label={"Required"}
-              onChange={(value: string) =>
-                setCurrentRequired(value)
-              }
+              onChange={(value: string) => setCurrentRequired(value)}
               value={currentRequired}
               fieldtype={currentType}
             />
           </Grid>
-    </Grid>
+        </Grid>
 
+        <Divider sx={{ my: 1, borderWidth: 1 }} />
 
-
-
-
-
-
-
-    <Divider sx={{ my: 1, borderWidth: 1 }} />
-
-        <Grid item xs={12} marginTop={"10px"} >
-        <Button variant="contained" color="primary" onClick={handleAddingField}>
-          Add Field
-        </Button>
-      </Grid>
+        <Grid item xs={12} marginTop={"10px"}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAddingField}
+          >
+            Add Field
+          </Button>
+        </Grid>
       </Grid>
     </Grid>
   );

@@ -7,16 +7,11 @@ export enum FieldType {
   Boolean = "boolean",
 }
 
-export type ValidationType = {
-  [key: string]: string; //  index signature to provide string-based indexing
-};
-
 export type Field = {
   key: string;
   type: FieldType;
   label: string;
   value: string;
-//   validationRules: ValidationType;
 errorMessage?: string,
 regexRules?: RegExp,
 required?:string,
@@ -44,7 +39,6 @@ export const formSlice = createSlice({
         errorMessage?: string,
         regexRules?: RegExp,
         required?:string   
-         // validationRules: ValidationType;
       }>
     ) => {
       const { key, type, label,  errorMessage, regexRules, required } = action.payload;
@@ -54,7 +48,6 @@ export const formSlice = createSlice({
         type,
         label,
         value: "",
-        // validationRules,
         errorMessage,
         regexRules,
         required

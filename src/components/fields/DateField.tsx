@@ -1,19 +1,16 @@
-import { TextField } from "@mui/material";
-import { Field } from "../../store/form";
+import { TextField, TextFieldProps } from "@mui/material";
 
-type DateFieldProps = {
+type DateFieldProps = Omit<TextFieldProps, "onChange"> & {
   label: string;
   value: string;
   onChange: (value: string) => void;
-  field?: Field;
 };
 
 export const DateField = ({
   label,
   value,
   onChange,
-  field,
-  
+  ...rest
 }: DateFieldProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
@@ -21,7 +18,6 @@ export const DateField = ({
 
   return (
     <TextField
-      required={field?.required === "1"}
       label={label}
       type="date"
       value={value}
@@ -31,6 +27,7 @@ export const DateField = ({
       }}
       fullWidth
       margin="normal"
+      {...rest}
     />
   );
 };

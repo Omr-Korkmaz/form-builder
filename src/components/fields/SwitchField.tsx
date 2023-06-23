@@ -1,13 +1,11 @@
 import { FormControlLabel, Switch } from "@mui/material";
 import { useEffect, useState } from "react";
-// import { ValidationType } from "../../store/form";
 
 type SwitchFieldProps = {
   label: string;
   value: string;
   onChange: (checked: string) => void;
   fieldtype: string;
-  // validationRulesValues: ValidationType;
 };
 
 export const SwitchField = ({
@@ -15,7 +13,6 @@ export const SwitchField = ({
   value,
   onChange,
   fieldtype,
-  // validationRulesValues,
 }: SwitchFieldProps) => {
   const [checked, setChecked] = useState(value === "1");
 
@@ -30,10 +27,8 @@ export const SwitchField = ({
     onChange("0");
   }, [fieldtype]);
 
-
   return (
     <FormControlLabel
-      // disabled={validation(fieldtype)}
       control={
         <Switch
           checked={checked}

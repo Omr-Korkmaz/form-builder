@@ -9,7 +9,6 @@ interface HelpPopoverProps {
 }
 
 export const HelpPopover: React.FC<HelpPopoverProps> = ({ content }) => {
-
   // basic material UI popover to see explaniation about validation rules
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -34,7 +33,7 @@ export const HelpPopover: React.FC<HelpPopoverProps> = ({ content }) => {
           "&:focus": { outline: "none" },
           cursor: "pointer",
           "&:hover": {
-            // transform: "scale(1.15)",
+            transform: "scale(1.15)",
             color: "#0d69e6",
             borderRadius: "50%",
           },
@@ -53,10 +52,8 @@ export const HelpPopover: React.FC<HelpPopoverProps> = ({ content }) => {
           horizontal: "left",
         }}
       >
-        <Typography sx={{ p: 2, width: "360px" }}>
-          {content}
-        </Typography>
+        <Typography sx={{ p: 2, width: "360px" }}>{content}</Typography>
       </Popover>
     </>
   );
-}
+};

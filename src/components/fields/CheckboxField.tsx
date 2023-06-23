@@ -1,18 +1,17 @@
-import { Checkbox, FormControlLabel } from "@mui/material";
-import { Field } from "../../store/form";
+import { Checkbox, FormControlLabel, CheckboxProps } from "@mui/material";
 
-type CheckboxFieldProps = {
+type CheckboxFieldProps = Omit<CheckboxProps, "onChange"> & {
+  // onChange props pass from other components below, that's why remove the orginal one belong to CheckboxProps
   label: string;
   value: string;
   onChange: (checked: string) => void;
-  field?: Field;
 };
 
 export const CheckboxField = ({
   label,
   value,
   onChange,
-  field,
+  ...rest
 }: CheckboxFieldProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.checked ? "1" : "0");
@@ -21,11 +20,7 @@ export const CheckboxField = ({
   return (
     <FormControlLabel
       control={
-        <Checkbox
-          required={field?.required === "1"}
-          checked={value === "1"}
-          onChange={handleChange}
-        />
+        <Checkbox checked={value === "1"} onChange={handleChange} {...rest} />
       }
       label={label}
     />

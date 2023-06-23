@@ -9,17 +9,22 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import { validateInput } from "../utils/ValidateInput.tsx";
 import { useState } from "react";
-// import {  useState } from "react";
-
 
 export const FormView = () => {
   const { fields } = useSelector((state: RootState) => state.form);
   const dispatch = useDispatch();
 
+  const [customErrorMessages, setCustomErrorMessages] = useState<
+    Record<string, string>
+  >({});
 
-const [customErrorMessages, setCustomErrorMessages] = useState<Record<string, string>>({});
-
-const handleBlur = (key: string, value: string, type: FieldType, pattern: RegExp | undefined, errorMessage: string | undefined) => {
+  const handleBlur = (
+    key: string,
+    value: string,
+    type: FieldType,
+    pattern: RegExp | undefined,
+    errorMessage: string | undefined
+  ) => {
     const errorMessages = validateInput(value, type, pattern, errorMessage);
     setCustomErrorMessages((prevErrors) => ({
       ...prevErrors,
@@ -36,8 +41,7 @@ const handleBlur = (key: string, value: string, type: FieldType, pattern: RegExp
     dispatch(removeField(key));
   };
 
-
-console.log("customErrorMessages", customErrorMessages)
+  console.log("customErrorMessages", customErrorMessages);
   const renderFields = () => {
     const renderedFields = [];
     for (const key in fields) {
@@ -45,18 +49,13 @@ console.log("customErrorMessages", customErrorMessages)
       const label = field.label;
       const onChange = (value: string) => dispatch(setValue({ key, value }));
       const value = field.value;
-    //   const onRemove = () => dispatch(removeField(key)); //this key line added for extra feature
+      //   const onRemove = () => dispatch(removeField(key)); //this key line added for extra feature
 
       const onRemove = () => handleRemoveField(key); //this key line added for extra feature
-
-
 
       switch (field.type) {
         case FieldType.Number:
         case FieldType.String:
-
-
-
           renderedFields.push(
             <Grid item xs={12} key={key}>
               <Box
@@ -70,20 +69,23 @@ console.log("customErrorMessages", customErrorMessages)
                   label={label}
                   onChange={onChange}
                   value={value}
-                  required = {field?.required==="1"}
-                  helperText={Boolean(customErrorMessages[key]) && customErrorMessages[key]  }
+                  required={field?.required === "1"}
+                  helperText={
+                    Boolean(customErrorMessages[key]) &&
+                    customErrorMessages[key]
+                  }
                   error={Boolean(customErrorMessages[key])}
-
-                onBlur= {() =>
-                handleBlur(key, value, field.type, field?.regexRules, field?.errorMessage)}
-            
-
-
-                //   field={field}
-                //   section="formPreview" // to see  where the inputField belongs. depending on formPreview or FormBuilder display error message
-
+                  onBlur={() =>
+                    handleBlur(
+                      key,
+                      value,
+                      field.type,
+                      field?.regexRules,
+                      field?.errorMessage
+                    )
+                  }
                 />
-                <DeleteIcon 
+                <DeleteIcon
                   onClick={onRemove}
                   sx={{
                     position: "absolute",
@@ -117,8 +119,7 @@ console.log("customErrorMessages", customErrorMessages)
                   label={label}
                   onChange={onChange}
                   value={value}
-                  field={field}
-
+                  required={field?.required === "1"}
                 />
                 <DeleteIcon
                   onClick={onRemove}
@@ -148,12 +149,10 @@ console.log("customErrorMessages", customErrorMessages)
                 }}
               >
                 <DateField
-                  field={field}
-                  
                   label={label}
                   onChange={onChange}
                   value={value}
-
+                  required={field?.required === "1"}
                 />
                 <DeleteIcon
                   onClick={onRemove}
@@ -173,7 +172,6 @@ console.log("customErrorMessages", customErrorMessages)
           );
       }
     }
-    
 
     return renderedFields;
   };
