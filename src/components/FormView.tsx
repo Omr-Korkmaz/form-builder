@@ -22,10 +22,15 @@ export const FormView = () => {
     key: string,
     value: string,
     type: FieldType,
-    pattern: RegExp | undefined,
+    // pattern: RegExp | undefined,
+    pattern: string | undefined,
+
     errorMessage: string | undefined
   ) => {
-    const errorMessages = validateInput(value, type, pattern, errorMessage);
+
+    const regex = pattern ? new RegExp(pattern) : undefined; // Parse the pattern back into a regular expression object
+
+    const errorMessages = validateInput(value, type, regex, errorMessage);
     setCustomErrorMessages((prevErrors) => ({
       ...prevErrors,
       [key]: errorMessages,

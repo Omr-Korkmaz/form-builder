@@ -69,7 +69,9 @@ export const FormBuilder = () => {
 
     if (currentType && currentKey && currentLabel) {
       const regex = currentRegex.trim()
-        ? new RegExp(currentRegex.trim())
+        // ? new RegExp(currentRegex.trim())
+        ? currentRegex.trim().toString()
+
         : undefined;
 
       dispatch(

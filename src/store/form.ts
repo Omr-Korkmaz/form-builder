@@ -13,7 +13,7 @@ export type Field = {
   label: string;
   value: string;
 errorMessage?: string,
-regexRules?: RegExp,
+regexRules?: string,
 required?:string,
 
 };
@@ -37,7 +37,7 @@ export const formSlice = createSlice({
         type: FieldType;
         label: string;
         errorMessage?: string,
-        regexRules?: RegExp,
+        regexRules?: string,
         required?:string   
       }>
     ) => {
