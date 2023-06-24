@@ -22,22 +22,19 @@ export const FormView = () => {
     key: string,
     value: string,
     type: FieldType,
-    // pattern: RegExp | undefined,
     pattern: string | undefined,
-
     errorMessage: string | undefined
   ) => {
 
-    const regex = pattern ? new RegExp(pattern) : undefined; // Parse the pattern back into a regular expression object
-
-    const errorMessages = validateInput(value, type, regex, errorMessage);
+    const regexPattern = pattern ? new RegExp(pattern) : undefined; // Parse the pattern back into a regular expression object
+    const errorMessages = validateInput(value, type, regexPattern, errorMessage);
     setCustomErrorMessages((prevErrors) => ({
       ...prevErrors,
       [key]: errorMessages,
     }));
   };
 
-  const handleRemoveField = (key: string) => {
+  const handleRemoveField = (key: string) => { // remove field with assign error message in the object
     setCustomErrorMessages((prevErrors) => {
       const updatedErrors = { ...prevErrors };
       delete updatedErrors[key];
@@ -54,9 +51,7 @@ export const FormView = () => {
       const label = field.label;
       const onChange = (value: string) => dispatch(setValue({ key, value }));
       const value = field.value;
-      //   const onRemove = () => dispatch(removeField(key)); //this key line added for extra feature
-
-      const onRemove = () => handleRemoveField(key); //this key line added for extra feature
+      const onRemove = () => handleRemoveField(key); //this key line added to remove field 
 
       switch (field.type) {
         case FieldType.Number:
@@ -111,9 +106,7 @@ export const FormView = () => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  position: "relative",
-                  borderRadius: 1,
-                  border: "thin dashed lightGray",
+                  justifyContent:'space-between',
                 }}
               >
                 <CheckboxField
@@ -125,9 +118,6 @@ export const FormView = () => {
                 <DeleteIcon
                   onClick={onRemove}
                   sx={{
-                    position: "absolute",
-                    right: -30,
-                    top: 10,
                     "&:hover": {
                       transform: "scale(1.15)",
                       color: "#8f130c",
@@ -146,7 +136,6 @@ export const FormView = () => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  position: "relative",
                 }}
               >
                 <DateField
@@ -155,12 +144,10 @@ export const FormView = () => {
                   value={value}
                   required={field?.required === "1"}
                 />
-                <DeleteIcon
+               <DeleteIcon
                   onClick={onRemove}
                   sx={{
-                    position: "absolute",
-                    right: -30,
-                    top: 30,
+                    cursor: "pointer",
                     "&:hover": {
                       transform: "scale(1.15)",
                       color: "#8f130c",

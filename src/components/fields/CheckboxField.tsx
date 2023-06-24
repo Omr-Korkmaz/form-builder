@@ -1,7 +1,7 @@
 import { Checkbox, FormControlLabel, CheckboxProps } from "@mui/material";
 
 type CheckboxFieldProps = Omit<CheckboxProps, "onChange"> & {
-  // onChange props pass from other components below, that's why remove the orginal one belong to CheckboxProps
+  // 'onChange' props pass from other components below, that's why remove the orginal one belong to CheckboxProps
   label: string;
   value: string;
   onChange: (checked: string) => void;

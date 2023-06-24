@@ -23,7 +23,7 @@ export const DateField = ({
       value={value}
       onChange={handleChange}
       InputLabelProps={{
-        shrink: true,
+      shrink: true,
       }}
       fullWidth
       margin="normal"

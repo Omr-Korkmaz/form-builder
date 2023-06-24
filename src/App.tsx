@@ -1,8 +1,7 @@
 import "./App.css";
 import { FormBuilder } from "./components/FormBuilder.tsx";
 import { FormView } from "./components/FormView.tsx";
-import { Box, Grid, Paper, AppBar } from "@mui/material";
-// import styled from '@emotion/styled'
+import { Box, Grid, Paper, AppBar, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 function App() {
@@ -21,15 +20,23 @@ function App() {
   }));
 
   return (
-    <Box sx={{backgroundColor:"#f1f2f3", minHeight:"100vh"}}>
- <AppBar position="static" color="secondary"  sx={{padding: "16px",
-          marginBottom: "30px",
-         }}  >
-    
-        <h1 style={{ textAlign: "left" }}>DigiExam</h1>
+    <Box sx={{ backgroundColor: "#f1f2f3", minHeight: "100vh" }}>
+      <AppBar
+        position="static"
+        color="secondary"
+        sx={{ padding: "16px", marginBottom: "30px" }}
+      >
+        <Typography
+          variant="h5"
+          color="inherit"
+          component="div"
+          sx={{ textAlign: "left" }}
+        >
+          DigiExam Homework Task
+        </Typography>
       </AppBar>
 
-      <Grid  container spacing={2} alignItems="flex-start">
+      <Grid container spacing={2} alignItems="flex-start">
         <Grid item xs={12} md={5}>
           <StyledFormBuilderPaper
             variant="outlined"
@@ -38,7 +45,7 @@ function App() {
             <FormBuilder />
           </StyledFormBuilderPaper>
         </Grid>
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12} md={6}>
           <StyledFormViewPaper
             style={{ marginRight: "30px", padding: "16px", height: "100%" }}
             variant="outlined"

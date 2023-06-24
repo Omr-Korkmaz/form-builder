@@ -1,10 +1,6 @@
 import { Dropdown } from "./fields/Dropdown.tsx";
 import { useEffect, useState } from "react";
-import {
-  addField,
-  FieldType,
-  //  ValidationType
-} from "../store/form.ts";
+import { addField, FieldType } from "../store/form.ts";
 import {
   Button,
   Grid,
@@ -25,13 +21,12 @@ export const FormBuilder = () => {
   const [currentLabel, setCurrentLabel] = useState("");
 
   const [currentErrorMessage, setCurrentErrorMessage] = useState("");
-  const [currentRegex, setCurrentRegex] = useState("");
+  const [currentPattern, setCurrentPattern] = useState("");
   const [currentRequired, setCurrentRequired] = useState("false");
 
   const [currentError, setCurrentError] = useState("");
 
   const [showAdditionalInputs, setShowAdditionalInputs] = useState(false);
-
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -45,12 +40,11 @@ export const FormBuilder = () => {
     return () => clearTimeout(timer);
   }, [currentType]);
 
-
   useEffect(() => {
     setCurrentKey("");
     setCurrentLabel("");
     setCurrentErrorMessage("");
-    setCurrentRegex("");
+    setCurrentPattern("");
     setCurrentRequired("");
   }, [currentType]);
 
@@ -68,10 +62,8 @@ export const FormBuilder = () => {
     }
 
     if (currentType && currentKey && currentLabel) {
-      const regex = currentRegex.trim()
-        // ? new RegExp(currentRegex.trim())
-        ? currentRegex.trim().toString()
-
+      const pattern = currentPattern.trim()
+        ? currentPattern.trim().toString()
         : undefined;
 
       dispatch(
@@ -80,7 +72,7 @@ export const FormBuilder = () => {
           type: currentType as FieldType,
           label: currentLabel.trim(),
           errorMessage: currentErrorMessage.trim(),
-          regexRules: regex,
+          regexRules: pattern,
           required: currentRequired,
         })
       );
@@ -88,7 +80,11 @@ export const FormBuilder = () => {
   };
 
   return (
-<Grid container spacing={2} sx={{ minWidth: { xs: '100%' }, margin: 'auto', py: 2, px: 6 }}>
+    <Grid
+      container
+      spacing={2}
+      sx={{ minWidth: { xs: "100%" }, margin: "auto", py: 2, px: 6 }}
+    >
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
           Form Builder
@@ -127,14 +123,9 @@ export const FormBuilder = () => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Grid container spacing={2}>
           {(currentType === "number" || currentType === "string") && (
-   <Container
-              sx={{
-                opacity: showAdditionalInputs ? 1 : 0,
-                transition: "opacity 0.1s",
-              }}
-            >              <Grid item xs={12} display={"flex"}>
+            <Container>
+              <Grid item xs={12} display={"flex"}>
                 <InputField
                   onChange={(value) => setCurrentErrorMessage(value)}
                   label="Custom error message"
@@ -144,9 +135,9 @@ export const FormBuilder = () => {
               </Grid>
               <Grid item xs={12} display={"flex"}>
                 <InputField
-                  onChange={(value) => setCurrentRegex(value)}
+                  onChange={(value) => setCurrentPattern(value)}
                   label="Custom pattern"
-                  value={currentRegex}
+                  value={currentPattern}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">/</InputAdornment>
@@ -169,7 +160,6 @@ export const FormBuilder = () => {
               fieldtype={currentType}
             />
           </Grid>
-        </Grid>
 
         <Divider sx={{ my: 1, borderWidth: 1 }} />
 

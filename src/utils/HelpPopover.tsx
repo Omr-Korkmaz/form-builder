@@ -8,8 +8,8 @@ interface HelpPopoverProps {
   content: string;
 }
 
+  // Basic material UI popover
 export const HelpPopover: React.FC<HelpPopoverProps> = ({ content }) => {
-  // basic material UI popover to see explaniation about validation rules
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
