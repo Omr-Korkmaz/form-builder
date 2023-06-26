@@ -7,7 +7,6 @@ import {
   Typography,
   Divider,
   InputAdornment,
-  Container,
 } from "@mui/material";
 import { InputField } from "./fields/InputField.tsx";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,26 +18,13 @@ export const FormBuilder = () => {
   const [currentType, setCurrentType] = useState("");
   const [currentKey, setCurrentKey] = useState("");
   const [currentLabel, setCurrentLabel] = useState("");
-
   const [currentErrorMessage, setCurrentErrorMessage] = useState("");
   const [currentPattern, setCurrentPattern] = useState("");
-  const [currentRequired, setCurrentRequired] = useState("false");
+  const [currentRequired, setCurrentRequired] = useState("");
 
-  const [currentError, setCurrentError] = useState("");
+  const [currentRequiredMessage, setCurrentRequiredMessage] = useState(""); // the local state keep message if the key or label input keep empty when Addfield button clicked
+  const [showContainer, setShowContainer] = useState(false); // this local state is used for showing extra inputs whenever "string" or "number" type selected 
 
-  const [showAdditionalInputs, setShowAdditionalInputs] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (currentType === "number" || currentType === "string") {
-        setShowAdditionalInputs(true);
-      } else {
-        setShowAdditionalInputs(false);
-      }
-    }, 200);
-
-    return () => clearTimeout(timer);
-  }, [currentType]);
 
   useEffect(() => {
     setCurrentKey("");
@@ -46,6 +32,9 @@ export const FormBuilder = () => {
     setCurrentErrorMessage("");
     setCurrentPattern("");
     setCurrentRequired("");
+    setCurrentRequiredMessage("");
+    setShowContainer(currentType === "number" || currentType === "string");
+
   }, [currentType]);
 
   const dispatch = useDispatch();
@@ -57,12 +46,12 @@ export const FormBuilder = () => {
       return;
     }
     if (!currentKey || !currentLabel) {
-      setCurrentError("not keep empty");
+      setCurrentRequiredMessage("This field is required");
       return;
     }
 
     if (currentType && currentKey && currentLabel) {
-      const pattern = currentPattern.trim()
+      const pattern = currentPattern
         ? currentPattern.trim().toString()
         : undefined;
 
@@ -82,7 +71,7 @@ export const FormBuilder = () => {
   return (
     <Grid
       container
-      spacing={2}
+      spacing={1}
       sx={{ minWidth: { xs: "100%" }, margin: "auto", py: 2, px: 6 }}
     >
       <Grid item xs={12}>
@@ -111,7 +100,8 @@ export const FormBuilder = () => {
           label="Key"
           value={currentKey}
           required
-          helperText={currentError}
+          helperText={ Boolean(!currentKey) && currentRequiredMessage}
+          error={Boolean(currentRequiredMessage) && Boolean(!currentKey)}
         />
       </Grid>
       <Grid item xs={12}>
@@ -120,11 +110,23 @@ export const FormBuilder = () => {
           label="Label"
           value={currentLabel}
           required
+          helperText={Boolean(!currentLabel) && currentRequiredMessage}
+          error={Boolean(currentRequiredMessage) && Boolean(!currentLabel)}
+
+
         />
       </Grid>
       <Grid item xs={12}>
-          {(currentType === "number" || currentType === "string") && (
-            <Container>
+          {/* {(currentType === "number" || currentType === "string") && ( */}
+            <Grid 
+             sx={{
+              opacity: showContainer ? 1 : 0,
+              height: showContainer ? "160px" : 0,
+              transition: "opacity 500ms, height 500ms",
+              overflow: "hidden",
+            }}
+             >
+
               <Grid item xs={12} display={"flex"}>
                 <InputField
                   onChange={(value) => setCurrentErrorMessage(value)}
@@ -149,8 +151,8 @@ export const FormBuilder = () => {
                 />
                 <HelpPopover content="You can provide a regular expression to create a specific validation for the current field. For example, to create a pattern that ensures the input does not contain any special characters, you can use the following regular expression: ^[a-zA-Z0-9\s]*$." />
               </Grid>
-            </Container>
-          )}
+            </Grid>
+          {/* )} */}
 
           <Grid item xs={4} marginRight={"auto"}>
             <SwitchField

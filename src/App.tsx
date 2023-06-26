@@ -36,7 +36,7 @@ function App() {
         </Typography>
       </AppBar>
 
-      <Grid container spacing={2} alignItems="flex-start">
+      <Grid container spacing={2} alignItems="flex-start" sx={{ maxWidth: "1300px" }}>
         <Grid item xs={12} md={5}>
           <StyledFormBuilderPaper
             variant="outlined"
@@ -45,7 +45,7 @@ function App() {
             <FormBuilder />
           </StyledFormBuilderPaper>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={7}>
           <StyledFormViewPaper
             style={{ marginRight: "30px", padding: "16px", height: "100%" }}
             variant="outlined"

@@ -27,7 +27,7 @@ export const HelpPopover: React.FC<HelpPopoverProps> = ({ content }) => {
 
   return (
     <>
-      <IconButton
+      <IconButton 
         onClick={handleClick}
         sx={{
           "&:focus": { outline: "none" },
@@ -35,7 +35,8 @@ export const HelpPopover: React.FC<HelpPopoverProps> = ({ content }) => {
           "&:hover": {
             transform: "scale(1.15)",
             color: "#0d69e6",
-            borderRadius: "50%",
+            borderRadius: "0",
+            backgroundColor:'inherit'
           },
           transition: "color 0.2s, transform 0.2s",
         }}

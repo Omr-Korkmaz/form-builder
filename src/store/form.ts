@@ -12,9 +12,9 @@ export type Field = {
   type: FieldType;
   label: string;
   value: string;
-errorMessage?: string,
-regexRules?: string,
-required?:string,
+  errorMessage?: string,
+  regexRules?: string,
+  required?:string,
 
 };
 
@@ -37,11 +37,11 @@ export const formSlice = createSlice({
         type: FieldType;
         label: string;
         errorMessage?: string,
-        regexRules?: string,
+        regexRules?: string, 
         required?:string   
       }>
     ) => {
-      const { key, type, label,  errorMessage, regexRules, required } = action.payload;
+      const { key, type, label, errorMessage, regexRules, required } = action.payload;
 
       state.fields[key] = {
         key,

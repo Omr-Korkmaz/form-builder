@@ -7,7 +7,7 @@ import { DateField } from "./fields/DateField.tsx";
 import { Box, Divider, Grid, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { validateInput } from "../utils/ValidateInput.tsx";
+import { validateInput } from "../utils/validateInput.tsx";
 import { useState } from "react";
 
 export const FormView = () => {
@@ -25,16 +25,21 @@ export const FormView = () => {
     pattern: string | undefined,
     errorMessage: string | undefined
   ) => {
-
-    const regexPattern = pattern ? new RegExp(pattern) : undefined; // Parse the pattern back into a regular expression object
-    const errorMessages = validateInput(value, type, regexPattern, errorMessage);
+    const regexPattern = pattern ? new RegExp(pattern) : undefined; // deserialize the pattern back into a regular expression object
+    const errorMessages = validateInput(
+      value,
+      type,
+      regexPattern,
+      errorMessage
+    );
     setCustomErrorMessages((prevErrors) => ({
       ...prevErrors,
       [key]: errorMessages,
     }));
   };
 
-  const handleRemoveField = (key: string) => { // remove field with assign error message in the object
+  const handleRemoveField = (key: string) => {
+    // remove field with assign error message in the object
     setCustomErrorMessages((prevErrors) => {
       const updatedErrors = { ...prevErrors };
       delete updatedErrors[key];
@@ -51,7 +56,7 @@ export const FormView = () => {
       const label = field.label;
       const onChange = (value: string) => dispatch(setValue({ key, value }));
       const value = field.value;
-      const onRemove = () => handleRemoveField(key); //this key line added to remove field 
+      const onRemove = () => handleRemoveField(key); //this key line added to remove field
 
       switch (field.type) {
         case FieldType.Number:
@@ -106,7 +111,7 @@ export const FormView = () => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent:'space-between',
+                  justifyContent: "space-between",
                 }}
               >
                 <CheckboxField
@@ -144,7 +149,7 @@ export const FormView = () => {
                   value={value}
                   required={field?.required === "1"}
                 />
-               <DeleteIcon
+                <DeleteIcon
                   onClick={onRemove}
                   sx={{
                     cursor: "pointer",
@@ -165,7 +170,11 @@ export const FormView = () => {
   };
 
   return (
-<Grid container spacing={2} sx={{ width: { xs: '100%' }, margin: 'auto', pb: 2 }}>
+    <Grid
+      container
+      spacing={2}
+      sx={{ width: { xs: "100%" }, margin: "auto", pb: 2 }}
+    >
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
           Form Preview
