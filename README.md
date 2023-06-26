@@ -48,38 +48,22 @@ Good luck!
 
 # Project Description
 
-The Form Builder App allows users to create and validate form fields dynamically. It provides a user-friendly interface to define form fields, specify validation rules.
+The Form Builder App allows users to create and validate form fields dynamically (user-defined). It provides a interface to define form fields.
 
-# Key Features
+# Key Features & Logic
 
-1. Dynamic Form Field Creation: Users can create form fields dynamically by providing a field type, key, label, and following validations 
-    - The entered value must be greater than or equal to 5.
-    - The input must begin with a capital letter.
-    - The input must match a specific pattern (e.g., an email format).
-    - The input must not contain any special characters.
-    - The input must be a valid date.
+1. Form State Management: The FormState is managed using Redux, which provides a centralized store to handle form data. 
 
-2. Validation Rule Configuration: Users can define validation rules for each form field before add to form preview section. there are some combination for these validation. user can not select all validation at the same time. forexample:
- 
-  - Depending on fieldtype:
-if selected fieldtype is number ("Greater than or equal to 5" and "Required Field" are active the others is disable )
-If the field type is set to string, the "Begin with a capital letter", "Not contain special chars", "Required Field", and "Valid email address" validations are active, while the others are disabled. 
+2. Dynamic Form Field Creation: Users can dynamically create form fields by specifying the field type, key, label, custom error message, and custom Regex pattern. The logic for field creation is implemented in "FormBuilder.tsx". Additionally, local error handling is implemented to display the message "This field is required" when the user hasn't filled in the "label" and "key" fields.  The form builder section includes information icons next to the "custom error message" and "custom pattern" fields, providing explanations about these features. The helpIcon triggers a reusable Material UI Popover component located in the utils folder.
 
-  - also the app provide combination depending on validation rules 
-   if Valid email address is selected Not contain special chars will be disable. (vice versa)
+3. Validation Rule Configurations: The "validateInput" function (located in the utils folder) is a reusable function that checks if a value matches a specific type, such as number, and also verifies if the entered value matches the provided pattern. Based on the value, it returns a custom error message.
 
+4. Error Messages: Validation errors are displayed using Material UI element attributes (error and helperText). Errors are triggered when the user clicks outside the field or on another field, indicating whether the entered data is incorrect. Validation errors are not applied to "Date" and "Boolean" fields because these field types have correct input formats by default.
 
-3. Error Messages: Validation errors are displayed using the Material UI element attributes (error and helperText). Errors are triggered when the user clicks outside the field or on another field, indicating if the entered data is incorrect. Validation errors is not applied "Date" and "Boolean"  because these field type correct input by itself
+5. Remove Feature:  This is an extra feature. The app includes a feature to remove fields from the form preview section. Users can easily remove unwanted fields as needed.
 
-4. Remove Feature:  This is an extra feature. The app includes a feature to remove fields from the form preview section. Users can easily remove unwanted fields as needed.
+# Design
 
+1. General Design: The app is designed to be responsive using grid and Material-UI styled components.
 
-# Design Logic
-
- 1. Form State Management: The FormState is managed using Redux, which provides a centralized store to handle form data and validation rules. 
-
-2. Validation Rules and Error Handling: The app utilizes the Material UI switch slide components to represent each validation rule. The validation logic is implemented in the switchField component, where the error messages are displayed based on the validation results.
-
-3. Reusable Components and Utils: The switchField component is designed to be reusable and handles the display and logic for each validation rule. The app also includes a utils folder and a validationRules file. The validationRules file consists of objects containing the name, rule, and error message for each validation rule. This structure enables easy management and configuration of validation rules.
-
-4. User Interface Design: The user interface is styled with hover effects and guide text, providing visual cues and hints to enhance the user experience. The interface adapts dynamically based on the selected field type, making it more intuitive and user-friendly.
+4. User Interface (for Field) Design: The user interface incorporates hover effects and guide text to provide visual cues and hints, enhancing the user experience. The interface dynamically adapts based on the selected field type, making it more intuitive and user-friendly.
