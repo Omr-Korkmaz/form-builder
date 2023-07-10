@@ -51,9 +51,9 @@ export const FormBuilder = () => {
     }
 
     if (currentType && currentKey && currentLabel) {
-      const pattern = currentPattern
-        ? currentPattern.trim().toString()
-        : undefined;
+      // const pattern = currentPattern
+      //   ? currentPattern.trim().toString()
+      //   : undefined;
 
       dispatch(
         addField({
@@ -61,7 +61,7 @@ export const FormBuilder = () => {
           type: currentType as FieldType,
           label: currentLabel.trim(),
           errorMessage: currentErrorMessage.trim(),
-          regexRules: pattern,
+          regexRules: currentPattern.trim(),
           required: currentRequired,
         })
       );
