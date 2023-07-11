@@ -1,9 +1,6 @@
 
 
-
-
-
-https://github.com/Omr-Korkmaz/form-builder/assets/39599546/abe6c6a0-e418-464b-bffc-411d36939c59
+https://github.com/Omr-Korkmaz/form-builder/assets/39599546/f37f0f28-ca8b-46aa-b878-878b47d50e42
 
 
 
